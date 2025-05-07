@@ -9,29 +9,15 @@ import 'package:spacex/features/launches/presentation/bloc/launch_list_bloc.dart
 import 'package:spacex/features/launches/presentation/bloc/launch_list_event.dart';
 import 'package:spacex/features/launches/presentation/pages/launch_list_page.dart';
 import 'package:spacex/localization/localization_cubit.dart';
-import 'package:spacex/localization/strings_base.dart';
-import 'package:spacex/localization/strings_en.i69n.dart';
-import 'package:spacex/localization/strings_th.i69n.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  final locale = WidgetsBinding.instance.platformDispatcher.locale.languageCode;
-  final strings = getStringsForLocale(locale);
 
   final client = http.Client();
   final repository = LaunchRepositoryImpl(LaunchRemoteDataSource(client));
   final useCase = GetLaunchListUseCase(repository);
 
   runApp(MyApp(useCase: useCase));
-}
-
-Strings getStringsForLocale(String locale) {
-  switch (locale) {
-    case 'th':
-      return const Strings_th();
-    default:
-      return const Strings_en();
-  }
 }
 
 class MyApp extends StatelessWidget {
