@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:spacex/core/theme/app_color.dart';
+import 'package:spacex/localization/strings_base.dart';
 
 class LiveLaunch extends StatefulWidget {
-  const LiveLaunch({super.key});
+
+  final Strings string;
+
+  const LiveLaunch({super.key , required this.string});
 
   @override
   State<LiveLaunch> createState() => _LiveLaunchState();
@@ -11,6 +15,7 @@ class LiveLaunch extends StatefulWidget {
 class _LiveLaunchState extends State<LiveLaunch> {
   @override
   Widget build(BuildContext context) {
+    Strings strings = widget.string;
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Center(
@@ -24,7 +29,7 @@ class _LiveLaunchState extends State<LiveLaunch> {
           child: SizedBox(
             width: width * 0.96,
             height: height * 0.25,
-            child: Center(child: Text('Live Launch')),
+            child: Center(child: Text('${strings.launches.livelaunch}')),
           ),
         ),
       ),

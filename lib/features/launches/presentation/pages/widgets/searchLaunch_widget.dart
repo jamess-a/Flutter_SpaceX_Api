@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:spacex/core/theme/app_color.dart';
+import 'package:spacex/core/utils/notifications_helper.dart';
+import 'package:spacex/localization/strings_base.dart';
 
 class SearchLaunchWidget extends StatefulWidget {
-  const SearchLaunchWidget({super.key});
+  final Strings string;
+
+  const SearchLaunchWidget({super.key, required this.string});
 
   @override
   State<SearchLaunchWidget> createState() => _SearchLaunchWidgetState();
@@ -24,11 +28,19 @@ class _SearchLaunchWidgetState extends State<SearchLaunchWidget> {
   }
 
   void handleSearch(String query) {
-    print(query);
+    if (query.isEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        NotificationHelper.showError(
+          context,
+          "Please enter launch name to search",
+        );
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    Strings strings = widget.string;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -53,7 +65,7 @@ class _SearchLaunchWidgetState extends State<SearchLaunchWidget> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(21)),
                 ),
-                labelText: 'Launch name',
+                labelText: strings.launches.searchHint,
               ),
             ),
           ),

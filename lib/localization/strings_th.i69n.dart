@@ -92,6 +92,7 @@ class LaunchesStrings_th extends LaunchesStrings {
   String get loading => "กำลังโหลดข้อมูล...";
   String get error => "เกิดข้อผิดพลาดบางอย่าง";
   String get success => "สําเร็จ";
+  String get livelaunch => "ถ่ายทอดสด";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -109,6 +110,8 @@ class LaunchesStrings_th extends LaunchesStrings {
         return error;
       case 'success':
         return success;
+      case 'livelaunch':
+        return livelaunch;
       default:
         return throw ArgumentError('Unknown key: $key');
     }

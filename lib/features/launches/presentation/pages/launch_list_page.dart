@@ -73,7 +73,7 @@ class LaunchListScreen extends StatelessWidget {
             ),
             body: Column(
               children: [
-                SearchLaunchWidget(),
+                SearchLaunchWidget(string: strings),
                 BlocBuilder<LaunchListBloc, LaunchListState>(
                   builder: (context, state) {
                     if (state is LaunchListLoading) {
@@ -179,7 +179,7 @@ class LaunchListScreen extends StatelessWidget {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [LiveLaunch()],
+                  children: [LiveLaunch(string: strings)],
                 ),
               ],
             ),
