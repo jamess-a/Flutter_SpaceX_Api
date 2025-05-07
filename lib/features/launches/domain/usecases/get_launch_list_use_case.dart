@@ -8,7 +8,10 @@ class GetLaunchListUseCase {
 
   GetLaunchListUseCase(this.repository);
 
-  Future<Either<Failure, List<Launch>>> call() {
-    return repository.getLaunches();
+  Future<Either<Failure, List<Launch>>> call({
+    Map<String, dynamic>? query,
+    Map<String, dynamic>? options,
+  }) {
+    return repository.getLaunches(query: query, options: options);
   }
 }

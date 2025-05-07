@@ -7,7 +7,12 @@ abstract class LaunchListEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class FetchLaunches extends LaunchListEvent {}
+class FetchLaunches extends LaunchListEvent {
+  final Map<String, dynamic>? query;
+  final Map<String, dynamic>? options;
+
+  const FetchLaunches({this.query, this.options});
+}
 
 class SearchLaunches extends LaunchListEvent {
   final String query;

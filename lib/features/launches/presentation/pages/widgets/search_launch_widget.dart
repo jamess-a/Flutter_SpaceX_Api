@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spacex/core/theme/app_color.dart';
 import 'package:spacex/core/utils/notifications_helper.dart';
+import 'package:spacex/features/launches/presentation/bloc/launch_List_bloc.dart';
+import 'package:spacex/features/launches/presentation/bloc/launch_list_event.dart';
 import 'package:spacex/localization/strings_base.dart';
 
 class SearchLaunchWidget extends StatefulWidget {
@@ -28,14 +31,15 @@ class _SearchLaunchWidgetState extends State<SearchLaunchWidget> {
   }
 
   void handleSearch(String query) {
+    print('search ${query}');
     if (query.isEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        NotificationHelper.showError(
-          context,
-          "Please enter launch name to search",
-        );
-      });
+      context.read<LaunchListBloc>().add(FetchLaunches());
     }
+    context.read<LaunchListBloc>().add(SearchLaunches(query));
+  }
+
+  void handleSortLaunches() {
+    print('handleSortLaunches');
   }
 
   @override
@@ -45,14 +49,6 @@ class _SearchLaunchWidgetState extends State<SearchLaunchWidget> {
       padding: const EdgeInsets.all(16),
       child: Row(
         children: [
-          IconButton(
-            color: AppColors.slateBlue,
-            iconSize: 35,
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              handleSearch(_controller.text);
-            },
-          ),
           Expanded(
             child: TextField(
               cursorColor: AppColors.lightLilac,
@@ -68,6 +64,19 @@ class _SearchLaunchWidgetState extends State<SearchLaunchWidget> {
                 labelText: strings.launches.searchHint,
               ),
             ),
+          ),
+          const SizedBox(width: 12),
+          IconButton(
+            color: AppColors.slateBlue,
+            iconSize: 25,
+            icon: const Icon(Icons.search),
+            onPressed: () => handleSearch(_controller.text),
+          ),
+          IconButton(
+            color: AppColors.slateBlue,
+            iconSize: 25,
+            icon: const Icon(Icons.sort_by_alpha),
+            onPressed: handleSortLaunches,
           ),
         ],
       ),

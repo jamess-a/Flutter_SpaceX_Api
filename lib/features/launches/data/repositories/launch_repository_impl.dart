@@ -10,14 +10,20 @@ class LaunchRepositoryImpl implements LaunchRepository {
   LaunchRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<Either<Failure, List<Launch>>> getLaunches() async {
+  Future<Either<Failure, List<Launch>>> getLaunches({
+    Map<String, dynamic>? query,
+    Map<String, dynamic>? options,
+  }) async {
     try {
-      final models = await remoteDataSource.fetchUpcomingLaunches();
+      final models = await remoteDataSource.fetchLaunches(
+        query: query,
+        options: options,
+      );
       final launches = models.map((m) => m.toEntity()).toList();
-
       return Right(launches);
     } catch (e) {
       return Left(ServerFailure('Exception: ${e.toString()}'));
     }
   }
 }
+

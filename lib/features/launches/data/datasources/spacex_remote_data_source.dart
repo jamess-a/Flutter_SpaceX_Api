@@ -7,17 +7,14 @@ class LaunchRemoteDataSource {
 
   LaunchRemoteDataSource(this.client);
 
-  Future<List<LaunchModel>> fetchUpcomingLaunches() async {
+  Future<List<LaunchModel>> fetchLaunches({
+    Map<String, dynamic>? query,
+    Map<String, dynamic>? options
+  }) async {
     final response = await client.post(
       Uri.parse('https://api.spacexdata.com/v4/launches/query'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        "query": {},
-        "options": {
-          "limit": 20,
-          "sort": {"date_utc": "asc"},
-        },
-      }),
+      body: jsonEncode({"query": query ?? {}, "options": options ?? {}}),
     );
 
     if (response.statusCode != 200) {
@@ -30,3 +27,13 @@ class LaunchRemoteDataSource {
     return docs.map((json) => LaunchModel.fromJson(json)).toList();
   }
 }
+
+// ดึงแบบค้นหาชื่อ
+// remoteDataSource.fetchLaunches(query: {
+//   "name": {"\$regex": "falcon", "\$options": "i"}
+// });
+
+// // ดึงแบบเรียงชื่อ A-Z
+// remoteDataSource.fetchLaunches(options: {
+//   "sort": {"name": 1}
+// });

@@ -26,18 +26,13 @@ class LaunchListBloc extends Bloc<LaunchListEvent, LaunchListState> {
     );
   }
 
-  void _onSearchLaunches(
-    SearchLaunches event,
-    Emitter<LaunchListState> emit,
-  ) async {
-    emit(LaunchListLoading());
+  void _onSearchLaunches(SearchLaunches event, Emitter<LaunchListState> emit) {
     final currentState = state;
     if (currentState is LaunchListLoaded) {
+      final query = event.query.toLowerCase();
       final filtered =
           currentState.launches
-              .where(
-                (l) => l.name.toLowerCase().contains(event.query.toLowerCase()),
-              )
+              .where((l) => l.name.toLowerCase().contains(query))
               .toList();
       emit(LaunchListLoaded(filtered));
     }

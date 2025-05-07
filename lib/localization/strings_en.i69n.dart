@@ -92,6 +92,7 @@ class LaunchesStrings_en extends LaunchesStrings {
   String get error => "Something went wrong.";
   String get success => "Success";
   String get livelaunch => "Live Launch";
+  String get emptyResult => "Launches not Found";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -111,6 +112,8 @@ class LaunchesStrings_en extends LaunchesStrings {
         return success;
       case 'livelaunch':
         return livelaunch;
+      case 'emptyResult':
+        return emptyResult;
       default:
         return throw ArgumentError('Unknown key: $key');
     }
