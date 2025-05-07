@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spacex/core/theme/app_color.dart';
+import 'package:spacex/core/utils/dateformator.dart';
 import 'package:spacex/core/utils/notifications_helper.dart';
 import 'package:spacex/features/launches/domain/entities/launch.dart';
 import 'package:spacex/features/launches/domain/usecases/get_launch_list_use_case.dart';
@@ -103,7 +104,9 @@ class LaunchListScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            subtitle: Text(launch.dateUtc.toString()),
+                            subtitle: Text(
+                              DateTimeFormatter.formatDateTime(launch.dateUtc),
+                            ),
                             leading: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
                               child:
