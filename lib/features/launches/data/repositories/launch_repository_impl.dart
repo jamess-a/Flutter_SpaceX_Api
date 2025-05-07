@@ -1,4 +1,3 @@
-// data/repositories/launch_repository_impl.dart
 import 'package:dartz/dartz.dart';
 import 'package:spacex/core/error/failures.dart';
 import 'package:spacex/features/launches/data/datasources/spacex_remote_data_source.dart';
@@ -13,7 +12,9 @@ class LaunchRepositoryImpl implements LaunchRepository {
   @override
   Future<Either<Failure, List<Launch>>> getLaunches() async {
     try {
-      final launches = await remoteDataSource.fetchUpcomingLaunches();
+      final models = await remoteDataSource.fetchUpcomingLaunches();
+      final launches = models.map((m) => m.toEntity()).toList();
+
       return Right(launches);
     } catch (e) {
       return Left(ServerFailure('Exception: ${e.toString()}'));
