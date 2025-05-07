@@ -1,0 +1,151 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spacex/core/theme/app_color.dart';
+import 'package:spacex/core/utils/notifications_helper.dart';
+import 'package:spacex/features/launches/domain/entities/launch.dart';
+import 'package:spacex/features/launches/domain/usecases/get_launch_list_use_case.dart';
+import 'package:spacex/features/launches/presentation/bloc/launch_List_bloc.dart';
+import 'package:spacex/features/launches/presentation/bloc/launch_list_event.dart';
+import 'package:spacex/features/launches/presentation/bloc/launch_list_state.dart';
+import 'package:spacex/features/launches/presentation/pages/widgets/bottomsheets.dart';
+import 'package:spacex/localization/localization_cubit.dart';
+import 'package:spacex/localization/strings_en.i69n.dart';
+
+class LaunchListScreen extends StatelessWidget {
+  final GetLaunchListUseCase useCase;
+  const LaunchListScreen({super.key, required this.useCase});
+
+  @override
+  Widget build(BuildContext context) {
+    final strings = context.watch<LanguageCubit>().state;
+
+    return BlocProvider<LaunchListBloc>(
+      create: (context) => LaunchListBloc(useCase)..add(FetchLaunches()),
+      child: Builder(
+        builder: (context) {
+          void switchLanguage() {
+            final currentLanguage = context.read<LanguageCubit>().state;
+            if (currentLanguage is Strings_en) {
+              context.read<LanguageCubit>().changeLanguage('th');
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                NotificationHelper.showSuccess(
+                  context,
+                  "Switch language to ${strings is Strings_en ? 'TH' : 'EN'}",
+                );
+              });
+            } else {
+              context.read<LanguageCubit>().changeLanguage('en');
+              NotificationHelper.showSuccess(
+                context,
+                "Switch language to ${strings is Strings_en ? 'TH' : 'EN'}",
+              );
+            }
+          }
+
+          void handleOpenModal(Launch launch) {
+            showLaunchModalBottomSheet(context, launch);
+          }
+
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(strings.launches.title),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: TextButton(
+                    onPressed: switchLanguage,
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColors.slateBlue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(22),
+                      ),
+                    ),
+                    child: Text(
+                      strings is Strings_en ? 'TH' : 'EN',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            body: BlocBuilder<LaunchListBloc, LaunchListState>(
+              builder: (context, state) {
+                if (state is LaunchListLoading) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    NotificationHelper.showSuccess(
+                      context,
+                      "${strings.launches.loading}",
+                    );
+                  });
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is LaunchListLoaded) {
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      context.read<LaunchListBloc>().add(FetchLaunches());
+                    },
+                    child: ListView.builder(
+                      itemCount: state.launches.length.clamp(0, 30),
+                      itemBuilder: (context, index) {
+                        final launch = state.launches[index];
+                        return Card(
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 4,
+                          child: ListTile(
+                            title: Text(
+                              launch.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(launch.dateUtc.toString()),
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child:
+                                  launch.imageUrl != null
+                                      ? Image.network(
+                                        launch.imageUrl!,
+                                        width: 50,
+                                        height: 50,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                const Icon(Icons.broken_image),
+                                      )
+                                      : const Icon(Icons.image_not_supported),
+                            ),
+                            trailing:
+                                launch.upcoming == true
+                                    ? const Icon(
+                                      Icons.schedule,
+                                      color: Colors.orange,
+                                    )
+                                    : const Icon(
+                                      Icons.check_circle,
+                                      color: Colors.green,
+                                    ),
+
+                            onTap: () {
+                              handleOpenModal(launch);
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                } else {
+                  return Center(child: Text(strings.launches.error));
+                }
+              },
+            ),
+          );
+        },
+      ),
+    );
+  }
+}

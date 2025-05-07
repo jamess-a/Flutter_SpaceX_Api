@@ -1,0 +1,14 @@
+import 'package:spacex/features/launches/domain/entities/launch.dart';
+import 'package:spacex/features/launches/domain/repositories/launch_repository.dart';
+import 'package:dartz/dartz.dart';
+import 'package:spacex/core/error/failures.dart';
+
+class GetLaunchListUseCase {
+  final LaunchRepository repository;
+
+  GetLaunchListUseCase(this.repository);
+
+  Future<Either<Failure, List<Launch>>> call() {
+    return repository.getLaunches();
+  }
+}

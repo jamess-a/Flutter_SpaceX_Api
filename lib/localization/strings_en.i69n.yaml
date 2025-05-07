@@ -1,0 +1,6 @@
+launches:
+  title: Launches
+  searchHint: Search by name
+  loading: Loading...
+  error: Something went wrong.
+  success: Success
