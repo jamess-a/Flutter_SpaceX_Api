@@ -27,9 +27,6 @@ enum SortCriteria { name, date }
 
 class SortLaunches extends LaunchListEvent {
   final SortCriteria criteria;
-
-  const SortLaunches(this.criteria);
-
-  @override
-  List<Object?> get props => [criteria];
+  final bool ascending;
+  const SortLaunches(this.criteria, {required this.ascending});
 }

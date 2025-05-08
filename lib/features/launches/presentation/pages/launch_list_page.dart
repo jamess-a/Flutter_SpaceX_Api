@@ -22,29 +22,23 @@ class LaunchListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final strings = context.watch<LanguageCubit>().state;
     final height = MediaQuery.of(context).size.height;
+
+    void switchLanguage(BuildContext context) {
+      final strings = context.read<LanguageCubit>().state;
+      context.read<LanguageCubit>().toggleLanguage();
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        NotificationHelper.showSuccess(
+          context,
+          "Switched language to ${strings is Strings_en ? 'TH' : 'EN'}",
+        );
+      });
+    }
+
     return BlocProvider<LaunchListBloc>(
-      create: (context) => LaunchListBloc(useCase)..add(FetchLaunches()),
+      create: (_) => LaunchListBloc(useCase)..add(FetchLaunches()),
       child: Builder(
         builder: (context) {
-          void switchLanguage() {
-            final currentLanguage = context.read<LanguageCubit>().state;
-            if (currentLanguage is Strings_en) {
-              context.read<LanguageCubit>().changeLanguage('th');
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                NotificationHelper.showSuccess(
-                  context,
-                  "Switch language to ${strings is Strings_en ? 'TH' : 'EN'}",
-                );
-              });
-            } else {
-              context.read<LanguageCubit>().changeLanguage('en');
-              NotificationHelper.showSuccess(
-                context,
-                "Switch language to ${strings is Strings_en ? 'TH' : 'EN'}",
-              );
-            }
-          }
-
           void handleOpenModal(Launch launch) {
             showLaunchModalBottomSheet(context, launch);
           }
@@ -52,11 +46,11 @@ class LaunchListScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text(strings.launches.title),
-              actions: [
+              actions: [ 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: TextButton(
-                    onPressed: switchLanguage,
+                    onPressed: () => switchLanguage(context),
                     style: TextButton.styleFrom(
                       backgroundColor: AppColors.slateBlue,
                       shape: RoundedRectangleBorder(

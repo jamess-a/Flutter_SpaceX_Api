@@ -1,18 +1,28 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'strings_base.dart';
-import 'strings_en.i69n.dart';
-import 'strings_th.i69n.dart';
+import 'package:spacex/localization/strings_base.dart';
+import 'package:spacex/localization/strings_en.i69n.dart';
+import 'package:spacex/localization/strings_th.i69n.dart';
 
 class LanguageCubit extends Cubit<Strings> {
-  LanguageCubit() : super(const Strings_en());
+  LanguageCubit() : super(Strings_en());
 
-  void changeLanguage(String localeCode) {
-    switch (localeCode) {
-      case 'th':
-        emit(const Strings_th());
-        break;
-      default:
-        emit(const Strings_en());
+  void changeLanguage(String languageCode) {
+    if (languageCode == 'th') {
+      emit(Strings_th());
+    } else {
+      emit(Strings_en());
     }
   }
+
+  void toggleLanguage() {
+    if (state is Strings_en) {
+      emit(Strings_th());
+    } else {
+      emit(Strings_en());
+    }
+  }
+
+  String get currentLanguage => state is Strings_en ? 'en' : 'th' ;
+
+  
 }

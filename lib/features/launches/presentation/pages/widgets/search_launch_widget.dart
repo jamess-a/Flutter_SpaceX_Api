@@ -17,7 +17,8 @@ class SearchLaunchWidget extends StatefulWidget {
 
 class _SearchLaunchWidgetState extends State<SearchLaunchWidget> {
   late TextEditingController _controller;
-
+  bool isNameAsc = true;
+  bool isDateAsc = true;
   @override
   void initState() {
     super.initState();
@@ -31,7 +32,6 @@ class _SearchLaunchWidgetState extends State<SearchLaunchWidget> {
   }
 
   void handleSearch(String query) {
-    print('search ${query}');
     if (query.isEmpty) {
       context.read<LaunchListBloc>().add(FetchLaunches());
     }
@@ -39,7 +39,21 @@ class _SearchLaunchWidgetState extends State<SearchLaunchWidget> {
   }
 
   void handleSortLaunches() {
-    print('handleSortLaunches');
+    context.read<LaunchListBloc>().add(
+      SortLaunches(SortCriteria.name, ascending: isNameAsc),
+    );
+    setState(() {
+      isNameAsc = !isNameAsc;
+    });
+  }
+
+  void handleSortLaunchesByDate() {
+    context.read<LaunchListBloc>().add(
+      SortLaunches(SortCriteria.date, ascending: isDateAsc),
+    );
+    setState(() {
+      isDateAsc = !isDateAsc;
+    });
   }
 
   @override
@@ -77,6 +91,12 @@ class _SearchLaunchWidgetState extends State<SearchLaunchWidget> {
             iconSize: 25,
             icon: const Icon(Icons.sort_by_alpha),
             onPressed: handleSortLaunches,
+          ),
+          IconButton(
+            color: AppColors.slateBlue,
+            iconSize: 25,
+            icon: const Icon(Icons.sort_sharp),
+            onPressed: handleSortLaunchesByDate,
           ),
         ],
       ),

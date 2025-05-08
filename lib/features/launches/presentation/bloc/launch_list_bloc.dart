@@ -8,6 +8,9 @@ import 'launch_list_state.dart';
 class LaunchListBloc extends Bloc<LaunchListEvent, LaunchListState> {
   final Future<Either<Failure, List<Launch>>> Function() getLaunches;
 
+  bool _isNameAsc = true;
+  bool _isDateAsc = true;
+
   LaunchListBloc(this.getLaunches) : super(LaunchListLoading()) {
     on<FetchLaunches>(_onFetchLaunches);
     on<SearchLaunches>(_onSearchLaunches);
@@ -44,10 +47,23 @@ class LaunchListBloc extends Bloc<LaunchListEvent, LaunchListState> {
       final sorted = [...currentState.launches];
       switch (event.criteria) {
         case SortCriteria.name:
-          sorted.sort((a, b) => a.name.compareTo(b.name));
+          sorted.sort(
+            (a, b) =>
+                event.ascending
+                    ? a.name.compareTo(b.name)
+                    : b.name.compareTo(a.name),
+          );
+          _isNameAsc = event.ascending;
           break;
+
         case SortCriteria.date:
-          sorted.sort((a, b) => a.dateUtc.compareTo(b.dateUtc));
+          sorted.sort(
+            (a, b) =>
+                event.ascending
+                    ? a.dateUtc.compareTo(b.dateUtc)
+                    : b.dateUtc.compareTo(a.dateUtc),
+          );
+          _isDateAsc = event.ascending;
           break;
       }
       emit(LaunchListLoaded(sorted));

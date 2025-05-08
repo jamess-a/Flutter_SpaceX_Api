@@ -28,12 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider<LanguageCubit>(create: (_) => LanguageCubit()),
-        BlocProvider<LaunchListBloc>(
-          create: (_) => LaunchListBloc(useCase)..add(FetchLaunches()),
-        ),
-      ],
+      providers: [BlocProvider<LanguageCubit>(create: (_) => LanguageCubit())],
       child: Builder(
         builder: (context) {
           return MaterialApp(

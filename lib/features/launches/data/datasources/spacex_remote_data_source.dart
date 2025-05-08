@@ -27,13 +27,3 @@ class LaunchRemoteDataSource {
     return docs.map((json) => LaunchModel.fromJson(json)).toList();
   }
 }
-
-// ดึงแบบค้นหาชื่อ
-// remoteDataSource.fetchLaunches(query: {
-//   "name": {"\$regex": "falcon", "\$options": "i"}
-// });
-
-// // ดึงแบบเรียงชื่อ A-Z
-// remoteDataSource.fetchLaunches(options: {
-//   "sort": {"name": 1}
-// });
