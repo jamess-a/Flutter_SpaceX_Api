@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:spacex/core/error/failures.dart';
 import 'package:spacex/features/launches/data/datasources/spacex_remote_data_source.dart';
+import 'package:spacex/features/launches/domain/entities/latest_launch.dart';
 import 'package:spacex/features/launches/domain/entities/launch.dart';
 import 'package:spacex/features/launches/domain/repositories/launch_repository.dart';
 
@@ -25,5 +26,15 @@ class LaunchRepositoryImpl implements LaunchRepository {
       return Left(ServerFailure('Exception: ${e.toString()}'));
     }
   }
-}
 
+  @override
+  Future<Either<Failure, LatestLaunch>> getLatestLaunch() async {
+    try {
+      final model = await remoteDataSource.fetchLatestLaunch();
+      final latestLaunch = model.toEntity();
+      return Right(latestLaunch);
+    } catch (e) {
+      return Left(ServerFailure('Exception: ${e.toString()}'));
+    }
+  }
+}

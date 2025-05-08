@@ -1,3 +1,4 @@
+import 'package:spacex/features/launches/domain/entities/latest_launch.dart';
 import 'package:spacex/features/launches/domain/entities/launch.dart';
 import 'package:dartz/dartz.dart';
 import 'package:spacex/core/error/failures.dart';
@@ -7,4 +8,6 @@ abstract class LaunchRepository {
     Map<String, dynamic>? query,
     Map<String, dynamic>? options,
   });
+
+  Future<Either<Failure, LatestLaunch>> getLatestLaunch();
 }

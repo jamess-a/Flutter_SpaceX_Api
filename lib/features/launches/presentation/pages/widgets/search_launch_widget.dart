@@ -17,8 +17,8 @@ class SearchLaunchWidget extends StatefulWidget {
 
 class _SearchLaunchWidgetState extends State<SearchLaunchWidget> {
   late TextEditingController _controller;
-  bool isNameAsc = true;
-  bool isDateAsc = true;
+  bool isNameAsc = false;
+  bool isDateAsc = false;
   @override
   void initState() {
     super.initState();
@@ -95,7 +95,11 @@ class _SearchLaunchWidgetState extends State<SearchLaunchWidget> {
           IconButton(
             color: AppColors.slateBlue,
             iconSize: 25,
-            icon: const Icon(Icons.sort_sharp),
+            icon: Icon(
+              isDateAsc
+                  ? Icons.arrow_circle_down_outlined
+                  : Icons.arrow_circle_up_outlined,
+            ),
             onPressed: handleSortLaunchesByDate,
           ),
         ],

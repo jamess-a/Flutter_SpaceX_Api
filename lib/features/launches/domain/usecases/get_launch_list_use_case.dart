@@ -1,3 +1,4 @@
+import 'package:spacex/features/launches/domain/entities/latest_launch.dart';
 import 'package:spacex/features/launches/domain/entities/launch.dart';
 import 'package:spacex/features/launches/domain/repositories/launch_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -13,5 +14,15 @@ class GetLaunchListUseCase {
     Map<String, dynamic>? options,
   }) {
     return repository.getLaunches(query: query, options: options);
+  }
+}
+
+class GetLatestLaunchUseCase {
+  final LaunchRepository repository;
+
+  GetLatestLaunchUseCase(this.repository);
+
+  Future<Either<Failure, LatestLaunch>> call() {
+    return repository.getLatestLaunch();
   }
 }

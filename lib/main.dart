@@ -5,8 +5,6 @@ import 'package:spacex/core/constants/keys.dart';
 import 'package:spacex/features/launches/data/datasources/spacex_remote_data_source.dart';
 import 'package:spacex/features/launches/data/repositories/launch_repository_impl.dart';
 import 'package:spacex/features/launches/domain/usecases/get_launch_list_use_case.dart';
-import 'package:spacex/features/launches/presentation/bloc/launch_list_bloc.dart';
-import 'package:spacex/features/launches/presentation/bloc/launch_list_event.dart';
 import 'package:spacex/features/launches/presentation/pages/launch_list_page.dart';
 import 'package:spacex/localization/localization_cubit.dart';
 
@@ -16,14 +14,16 @@ void main() {
   final client = http.Client();
   final repository = LaunchRepositoryImpl(LaunchRemoteDataSource(client));
   final useCase = GetLaunchListUseCase(repository);
+  final latestUseCase = GetLatestLaunchUseCase(repository);
 
-  runApp(MyApp(useCase: useCase));
+  runApp(MyApp(useCase: useCase, latestUseCase: latestUseCase));
 }
 
 class MyApp extends StatelessWidget {
   final GetLaunchListUseCase useCase;
+  final GetLatestLaunchUseCase latestUseCase;
 
-  const MyApp({super.key, required this.useCase});
+  const MyApp({super.key, required this.useCase, required this.latestUseCase});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,10 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             navigatorKey: navigatorKey,
             theme: ThemeData.dark(),
-            home: LaunchListScreen(useCase: useCase),
+            home: LaunchListScreen(
+              useCase: useCase,
+              latestUseCase: latestUseCase,
+            ),
           );
         },
       ),

@@ -27,3 +27,4 @@ class LaunchListError extends LaunchListState {
   @override
   List<Object?> get props => [message];
 }
+
