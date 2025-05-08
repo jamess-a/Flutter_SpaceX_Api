@@ -92,7 +92,9 @@ class LaunchListScreen extends StatelessWidget {
             ),
             body: Column(
               children: [
-                SearchLaunchWidget(string: strings),
+                Builder(
+                  builder: (context) => SearchLaunchWidget(string: strings),
+                ),
                 Expanded(
                   child: BlocBuilder<LaunchListBloc, LaunchListState>(
                     builder: (context, state) {
