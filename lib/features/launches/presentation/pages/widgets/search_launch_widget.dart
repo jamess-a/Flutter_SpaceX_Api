@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spacex/core/theme/app_color.dart';
 import 'package:spacex/core/utils/notifications_helper.dart';
-import 'package:spacex/features/launches/presentation/bloc/launch_List_bloc.dart';
-import 'package:spacex/features/launches/presentation/bloc/launch_list_event.dart';
+import 'package:spacex/features/launches/presentation/bloc/launches/launch_List_bloc.dart';
+import 'package:spacex/features/launches/presentation/bloc/launches/launch_list_event.dart';
 import 'package:spacex/localization/strings_base.dart';
 
 class SearchLaunchWidget extends StatefulWidget {

@@ -3,15 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spacex/core/theme/app_color.dart';
 import 'package:spacex/core/utils/dateformator.dart';
 import 'package:spacex/core/utils/notifications_helper.dart';
-import 'package:spacex/features/launches/domain/entities/latest_launch.dart';
 import 'package:spacex/features/launches/domain/entities/launch.dart';
 import 'package:spacex/features/launches/domain/usecases/get_launch_list_use_case.dart';
-import 'package:spacex/features/launches/presentation/bloc/latest_launch_list_bloc.dart';
-import 'package:spacex/features/launches/presentation/bloc/latest_launch_list_event.dart';
-import 'package:spacex/features/launches/presentation/bloc/latest_launch_list_state.dart';
-import 'package:spacex/features/launches/presentation/bloc/launch_List_bloc.dart';
-import 'package:spacex/features/launches/presentation/bloc/launch_list_event.dart';
-import 'package:spacex/features/launches/presentation/bloc/launch_list_state.dart';
+import 'package:spacex/features/launches/presentation/bloc/latest_launch/latest_launch_list_bloc.dart';
+import 'package:spacex/features/launches/presentation/bloc/latest_launch/latest_launch_list_event.dart';
+import 'package:spacex/features/launches/presentation/bloc/latest_launch/latest_launch_list_state.dart';
+import 'package:spacex/features/launches/presentation/bloc/launches/launch_list_bloc.dart';
+import 'package:spacex/features/launches/presentation/bloc/launches/launch_list_event.dart';
+import 'package:spacex/features/launches/presentation/bloc/launches/launch_list_state.dart';
 import 'package:spacex/features/launches/presentation/pages/widgets/launch_detail_modal.dart';
 import 'package:spacex/features/launches/presentation/pages/widgets/search_launch_widget.dart';
 import 'package:spacex/features/launches/presentation/pages/widgets/live_launch_widget.dart';
@@ -77,9 +76,15 @@ class LaunchListScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(22),
                       ),
                     ),
-                    child: Text(
-                      strings is Strings_en ? 'TH' : 'EN',
-                      style: const TextStyle(color: Colors.white),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.language, color: Colors.white),
+                        const SizedBox(width: 8),
+                        Text(
+                          strings is Strings_en ? 'EN' : 'TH',
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ],
                     ),
                   ),
                 ),
