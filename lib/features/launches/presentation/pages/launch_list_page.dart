@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spacex/core/theme/app_color.dart';
 import 'package:spacex/core/utils/dateformator.dart';
 import 'package:spacex/core/utils/notifications_helper.dart';
-import 'package:spacex/features/launches/domain/usecases/get_launch_list_use_case.dart';
+import 'package:spacex/features/launches/domain/usecases/use_case.dart';
 import 'package:spacex/features/launches/presentation/bloc/latest_launch/latest_launch_list_bloc.dart';
 import 'package:spacex/features/launches/presentation/bloc/latest_launch/latest_launch_list_event.dart';
 import 'package:spacex/features/launches/presentation/bloc/latest_launch/latest_launch_list_state.dart';
@@ -47,6 +47,28 @@ class LaunchListScreen extends StatelessWidget {
       });
     }
 
+    void handleOpenModal(BuildContext context, String id) async {
+      final bloc = context.read<DetailLaunchBloc>();
+      final navigator = Navigator.of(context);
+
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const Center(child: CircularProgressIndicator()),
+      );
+
+      final result = await detailUseCase.call(id);
+
+      bloc.add(FetchDetailLaunch(id));
+
+      navigator.pop();
+
+      result.fold(
+        (failure) => NotificationHelper.showError(context, failure.message),
+        (launch) => showLaunchModalBottomSheet(context, launch),
+      );
+    }
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<LatestLaunchBloc>(
@@ -64,26 +86,6 @@ class LaunchListScreen extends StatelessWidget {
       ],
       child: Builder(
         builder: (context) {
-          void handleOpenModal(String id) async {
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder:
-                  (context) => const Center(child: CircularProgressIndicator()),
-            );
-
-            final result = await detailUseCase.call(id);
-            context.read<DetailLaunchBloc>().add(FetchDetailLaunch(id));
-
-            Navigator.of(context).pop();
-
-            result.fold(
-              (failure) =>
-                  NotificationHelper.showError(context, failure.message),
-              (launch) => showLaunchModalBottomSheet(context, launch),
-            );
-          }
-
           return Scaffold(
             appBar: AppBar(
               title: Text(strings.launches.title),
@@ -232,7 +234,10 @@ class LaunchListScreen extends StatelessWidget {
                                         if (launch.id == null) {
                                           return print('null id');
                                         }
-                                        handleOpenModal(launch.id ?? '');
+                                        handleOpenModal(
+                                          context,
+                                          launch.id ?? '',
+                                        );
                                       },
                                     ),
                                   );

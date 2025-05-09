@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:spacex/core/constants/keys.dart';
 import 'package:spacex/features/launches/data/datasources/spacex_remote_data_source.dart';
 import 'package:spacex/features/launches/data/repositories/launch_repository_impl.dart';
-import 'package:spacex/features/launches/domain/usecases/get_launch_list_use_case.dart';
+import 'package:spacex/features/launches/domain/usecases/use_case.dart';
 import 'package:spacex/features/launches/presentation/pages/launch_list_page.dart';
 import 'package:spacex/localization/localization_cubit.dart';
 
