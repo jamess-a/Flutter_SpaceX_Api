@@ -34,6 +34,6 @@ class GetDetailLaunchUseCase {
   GetDetailLaunchUseCase(this.repository);
 
   Future<Either<Failure, LaunchDetail>> call(String id) {
-    return repository.getOneLaunch(id);
+    return repository.getDetailLaunch(id);
   }
 }

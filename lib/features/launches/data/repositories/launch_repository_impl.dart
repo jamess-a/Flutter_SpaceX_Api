@@ -40,7 +40,7 @@ class LaunchRepositoryImpl implements LaunchRepository {
   }
 
   @override
-  Future<Either<Failure, LaunchDetail>> getOneLaunch(String id) async {
+  Future<Either<Failure, LaunchDetail>> getDetailLaunch(String id) async {
     try {
       final model = await remoteDataSource.fetchOneLaunch(id);
       final detailLaunch = model.toEntity();

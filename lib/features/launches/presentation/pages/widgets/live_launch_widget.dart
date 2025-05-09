@@ -16,7 +16,7 @@ class LiveLaunch extends StatelessWidget {
     void _launchWebcast(String url) async {
       final Uri uri = Uri.parse(url);
       if (await canLaunchUrl(uri)) {
-        await launchUrl(uri , mode: LaunchMode.externalApplication);
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
       }
     }
 
@@ -54,6 +54,34 @@ class LiveLaunch extends StatelessWidget {
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                   ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: [
+                          Icon(Icons.circle, color: Colors.red),
+                          SizedBox(width: 8),
+                          Text('${string.launches.livelaunch}', style: TextStyle(color: Colors.white)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Icon(Icons.arrow_forward_ios, color: Colors.white),
+                    ),
+                  ],
                 ),
               ),
               Padding(

@@ -11,7 +11,7 @@ abstract class LaunchRepository {
   });
 
   Future<Either<Failure, LatestLaunch>> getLatestLaunch();
-  Future<Either<Failure, LaunchDetail>> getOneLaunch(
+  Future<Either<Failure, LaunchDetail>> getDetailLaunch(
     String id,  
   );
 }
