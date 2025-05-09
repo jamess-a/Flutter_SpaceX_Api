@@ -31,6 +31,4 @@ class SortLaunches extends LaunchListEvent {
   const SortLaunches(this.criteria, {required this.ascending});
 }
 
-abstract class LatestLaunchEvent {}
-
 

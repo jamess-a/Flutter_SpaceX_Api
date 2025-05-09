@@ -15,15 +15,28 @@ void main() {
   final repository = LaunchRepositoryImpl(LaunchRemoteDataSource(client));
   final useCase = GetLaunchListUseCase(repository);
   final latestUseCase = GetLatestLaunchUseCase(repository);
+  final detailUseCase = GetDetailLaunchUseCase(repository);
 
-  runApp(MyApp(useCase: useCase, latestUseCase: latestUseCase));
+  runApp(
+    MyApp(
+      useCase: useCase,
+      latestUseCase: latestUseCase,
+      detailUseCase: detailUseCase,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   final GetLaunchListUseCase useCase;
   final GetLatestLaunchUseCase latestUseCase;
+  final GetDetailLaunchUseCase detailUseCase;
 
-  const MyApp({super.key, required this.useCase, required this.latestUseCase});
+  const MyApp({
+    super.key,
+    required this.useCase,
+    required this.latestUseCase,
+    required this.detailUseCase,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +50,7 @@ class MyApp extends StatelessWidget {
             home: LaunchListScreen(
               useCase: useCase,
               latestUseCase: latestUseCase,
+              detailUseCase: detailUseCase,
             ),
           );
         },

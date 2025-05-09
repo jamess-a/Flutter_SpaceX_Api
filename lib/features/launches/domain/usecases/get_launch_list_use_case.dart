@@ -1,5 +1,6 @@
 import 'package:spacex/features/launches/domain/entities/latest_launch.dart';
 import 'package:spacex/features/launches/domain/entities/launch.dart';
+import 'package:spacex/features/launches/domain/entities/launch_detail.dart';
 import 'package:spacex/features/launches/domain/repositories/launch_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:spacex/core/error/failures.dart';
@@ -24,5 +25,15 @@ class GetLatestLaunchUseCase {
 
   Future<Either<Failure, LatestLaunch>> call() {
     return repository.getLatestLaunch();
+  }
+}
+
+class GetDetailLaunchUseCase {
+  final LaunchRepository repository;
+
+  GetDetailLaunchUseCase(this.repository);
+
+  Future<Either<Failure, LaunchDetail>> call(String id) {
+    return repository.getOneLaunch(id);
   }
 }

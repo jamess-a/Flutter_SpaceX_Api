@@ -77,16 +77,16 @@ class _SearchLaunchWidgetState extends State<SearchLaunchWidget> {
                         borderRadius: BorderRadius.all(Radius.circular(21)),
                       ),
                       labelText: strings.launches.searchHint,
+                      suffixIcon: IconButton(
+                        color: AppColors.slateBlue,
+                        iconSize: 25,
+                        icon: const Icon(Icons.search),
+                        onPressed: () => handleSearch(_controller.text),
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(width: 12),
-                IconButton(
-                  color: AppColors.slateBlue,
-                  iconSize: 25,
-                  icon: const Icon(Icons.search),
-                  onPressed: () => handleSearch(_controller.text),
-                ),
                 IconButton(
                   color: AppColors.slateBlue,
                   iconSize: 25,

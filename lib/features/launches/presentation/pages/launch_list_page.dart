@@ -3,15 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spacex/core/theme/app_color.dart';
 import 'package:spacex/core/utils/dateformator.dart';
 import 'package:spacex/core/utils/notifications_helper.dart';
-import 'package:spacex/features/launches/domain/entities/launch.dart';
 import 'package:spacex/features/launches/domain/usecases/get_launch_list_use_case.dart';
 import 'package:spacex/features/launches/presentation/bloc/latest_launch/latest_launch_list_bloc.dart';
 import 'package:spacex/features/launches/presentation/bloc/latest_launch/latest_launch_list_event.dart';
 import 'package:spacex/features/launches/presentation/bloc/latest_launch/latest_launch_list_state.dart';
+import 'package:spacex/features/launches/presentation/bloc/launch_detail/detail_launch_list_bloc.dart';
+import 'package:spacex/features/launches/presentation/bloc/launch_detail/detail_launch_list_event.dart';
 import 'package:spacex/features/launches/presentation/bloc/launches/launch_list_bloc.dart';
 import 'package:spacex/features/launches/presentation/bloc/launches/launch_list_event.dart';
 import 'package:spacex/features/launches/presentation/bloc/launches/launch_list_state.dart';
-import 'package:spacex/features/launches/presentation/pages/widgets/launch_detail_modal.dart';
+import 'package:spacex/features/launches/presentation/pages/widgets/detail_launch_modal_widget.dart';
 import 'package:spacex/features/launches/presentation/pages/widgets/search_launch_widget.dart';
 import 'package:spacex/features/launches/presentation/pages/widgets/live_launch_widget.dart';
 
@@ -21,10 +22,12 @@ import 'package:spacex/localization/strings_en.i69n.dart';
 class LaunchListScreen extends StatelessWidget {
   final GetLaunchListUseCase useCase;
   final GetLatestLaunchUseCase latestUseCase;
+  final GetDetailLaunchUseCase detailUseCase;
   const LaunchListScreen({
     super.key,
     required this.useCase,
     required this.latestUseCase,
+    required this.detailUseCase,
   });
 
   @override
@@ -55,11 +58,30 @@ class LaunchListScreen extends StatelessWidget {
         BlocProvider<LaunchListBloc>(
           create: (_) => LaunchListBloc(useCase.call)..add(FetchLaunches()),
         ),
+        BlocProvider<DetailLaunchBloc>(
+          create: (_) => DetailLaunchBloc(detailUseCase.call),
+        ),
       ],
       child: Builder(
         builder: (context) {
-          void handleOpenModal(Launch launch) {
-            showLaunchModalBottomSheet(context, launch);
+          void handleOpenModal(String id) async {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder:
+                  (context) => const Center(child: CircularProgressIndicator()),
+            );
+
+            final result = await detailUseCase.call(id);
+            context.read<DetailLaunchBloc>().add(FetchDetailLaunch(id));
+
+            Navigator.of(context).pop();
+
+            result.fold(
+              (failure) =>
+                  NotificationHelper.showError(context, failure.message),
+              (launch) => showLaunchModalBottomSheet(context, launch),
+            );
           }
 
           return Scaffold(
@@ -207,7 +229,10 @@ class LaunchListScreen extends StatelessWidget {
                                               ),
 
                                       onTap: () {
-                                        handleOpenModal(launch);
+                                        if (launch.id == null) {
+                                          return print('null id');
+                                        }
+                                        handleOpenModal(launch.id ?? '');
                                       },
                                     ),
                                   );
@@ -237,7 +262,7 @@ class LaunchListScreen extends StatelessWidget {
                         print(state.message);
                         return Center(child: Text(state.message));
                       } else {
-                        return Text('เป็นควยไร');
+                        return Text(strings.launches.error);
                       }
                     },
                   ),
