@@ -92,6 +92,7 @@ class LaunchesStrings_th extends LaunchesStrings {
   String get loading => "กำลังโหลดข้อมูล...";
   String get error => "เกิดข้อผิดพลาดบางอย่าง";
   String get success => "สําเร็จ";
+  String get failed => "ไม่สําเร็จ";
   String get livelaunch => "ถ่ายทอดสด";
   String get emptyResult => "ไม่พบข้อมูล";
   Object operator [](String key) {
@@ -111,6 +112,8 @@ class LaunchesStrings_th extends LaunchesStrings {
         return error;
       case 'success':
         return success;
+      case 'failed':
+        return failed;
       case 'livelaunch':
         return livelaunch;
       case 'emptyResult':

@@ -91,6 +91,7 @@ class LaunchesStrings_en extends LaunchesStrings {
   String get loading => "Loading...";
   String get error => "Something went wrong.";
   String get success => "Success";
+  String get failed => "Failed";
   String get livelaunch => "Live Launch";
   String get emptyResult => "Launches not Found";
   Object operator [](String key) {
@@ -110,6 +111,8 @@ class LaunchesStrings_en extends LaunchesStrings {
         return error;
       case 'success':
         return success;
+      case 'failed':
+        return failed;
       case 'livelaunch':
         return livelaunch;
       case 'emptyResult':

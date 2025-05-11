@@ -65,7 +65,7 @@ class LaunchListScreen extends StatelessWidget {
 
       result.fold(
         (failure) => NotificationHelper.showError(context, failure.message),
-        (launch) => showLaunchModalBottomSheet(context, launch),
+        (launch) => showLaunchModalBottomSheet(context, launch , strings ),
       );
     }
 

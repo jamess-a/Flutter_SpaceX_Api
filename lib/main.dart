@@ -1,57 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
-import 'package:spacex/core/constants/keys.dart';
-import 'package:spacex/features/launches/data/datasources/spacex_remote_data_source.dart';
-import 'package:spacex/features/launches/data/repositories/launch_repository_impl.dart';
-import 'package:spacex/features/launches/domain/usecases/use_case.dart';
-import 'package:spacex/features/launches/presentation/pages/launch_list_page.dart';
+import 'package:spacex/core/di/injection_container.dart' as di;
+import 'package:spacex/core/network/connectivity_cubit.dart';
+import 'package:spacex/core/presentation/widgets/connectivity_wrapper.dart';
 import 'package:spacex/localization/localization_cubit.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
 
-  final client = http.Client();
-  final repository = LaunchRepositoryImpl(LaunchRemoteDataSource(client));
-  final useCase = GetLaunchListUseCase(repository);
-  final latestUseCase = GetLatestLaunchUseCase(repository);
-  final detailUseCase = GetDetailLaunchUseCase(repository);
-
-  runApp(
-    MyApp(
-      useCase: useCase,
-      latestUseCase: latestUseCase,
-      detailUseCase: detailUseCase,
-    ),
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final GetLaunchListUseCase useCase;
-  final GetLatestLaunchUseCase latestUseCase;
-  final GetDetailLaunchUseCase detailUseCase;
-
-  const MyApp({
-    super.key,
-    required this.useCase,
-    required this.latestUseCase,
-    required this.detailUseCase,
-  });
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider<LanguageCubit>(create: (_) => LanguageCubit())],
+      providers: [
+        BlocProvider<LanguageCubit>(create: (_) => LanguageCubit()),
+        BlocProvider<ConnectivityCubit>(create: (_) => ConnectivityCubit()),
+      ],
       child: Builder(
         builder: (context) {
           return MaterialApp(
-            navigatorKey: navigatorKey,
             theme: ThemeData.dark(),
-            home: LaunchListScreen(
-              useCase: useCase,
-              latestUseCase: latestUseCase,
-              detailUseCase: detailUseCase,
-            ),
+            home: ConnectivityWrapper(),
           );
         },
       ),
