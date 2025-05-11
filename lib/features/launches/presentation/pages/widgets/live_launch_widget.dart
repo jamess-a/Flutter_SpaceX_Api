@@ -34,7 +34,10 @@ class LiveLaunch extends StatelessWidget {
           width: width * 0.98,
           height: height * 0.25,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
             image:
                 launch.youtubeThumbnail != null
                     ? DecorationImage(
@@ -48,7 +51,10 @@ class LiveLaunch extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                  ),
                   gradient: LinearGradient(
                     colors: [Colors.black.withOpacity(0.3), Colors.transparent],
                     begin: Alignment.bottomCenter,
@@ -66,7 +72,10 @@ class LiveLaunch extends StatelessWidget {
                         children: [
                           Icon(Icons.circle, color: Colors.red),
                           SizedBox(width: 8),
-                          Text('${string.launches.livelaunch}', style: TextStyle(color: Colors.white)),
+                          Text(
+                            '${string.launches.livelaunch}',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ],
                       ),
                     ),

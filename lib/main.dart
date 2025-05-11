@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spacex/core/di/injection_container.dart' as di;
 import 'package:spacex/core/network/connectivity_cubit.dart';
-import 'package:spacex/core/presentation/widgets/connectivity_wrapper.dart';
+import 'package:spacex/core/router/app_router.dart';
 import 'package:spacex/localization/localization_cubit.dart';
 
 void main() async {
@@ -23,12 +23,11 @@ class MyApp extends StatelessWidget {
         BlocProvider<ConnectivityCubit>(create: (_) => ConnectivityCubit()),
       ],
       child: Builder(
-        builder: (context) {
-          return MaterialApp(
-            theme: ThemeData.dark(),
-            home: ConnectivityWrapper(),
-          );
-        },
+        builder:
+            (context) => MaterialApp.router(
+              routerConfig: AppRouter.router,
+              theme: ThemeData.dark(),
+            ),
       ),
     );
   }

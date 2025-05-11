@@ -49,7 +49,8 @@ class LaunchListScreen extends StatelessWidget {
 
     void handleOpenModal(BuildContext context, String id) async {
       final bloc = context.read<DetailLaunchBloc>();
-      final navigator = Navigator.of(context);
+      final navigator = Navigator.of(context, rootNavigator: true);
+      final language = context.read<LanguageCubit>().state;
 
       showDialog(
         context: context,
@@ -57,16 +58,25 @@ class LaunchListScreen extends StatelessWidget {
         builder: (context) => const Center(child: CircularProgressIndicator()),
       );
 
-      final result = await detailUseCase.call(id);
+      try {
+        final result = await detailUseCase.call(id);
 
-      bloc.add(FetchDetailLaunch(id));
-
-      navigator.pop();
-
-      result.fold(
-        (failure) => NotificationHelper.showError(context, failure.message),
-        (launch) => showLaunchModalBottomSheet(context, launch , strings ),
-      );
+        result.fold(
+          (failure) => NotificationHelper.showError(context, failure.message),
+          (launch) {
+            bloc.add(FetchDetailLaunch(id));
+            showLaunchModalBottomSheet(context, launch, language);
+          },
+        );
+      } catch (e) {
+        NotificationHelper.showError(context, 'Unexpected error occurred: $e');
+      } finally {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (navigator.canPop()) {
+            navigator.pop();
+          }
+        });
+      }
     }
 
     return MultiBlocProvider(
