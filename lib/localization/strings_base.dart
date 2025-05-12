@@ -4,6 +4,7 @@ abstract class Strings implements I69nMessageBundle {
   const Strings();
 
   get launches => null;
+  get crew => null;
   get modal => null;
 
 

@@ -66,6 +66,7 @@ class Strings_en extends Strings {
   const Strings_en();
   LaunchesStrings_en get launches => LaunchesStrings_en(this);
   LaunchesStrings_en get modals => LaunchesStrings_en(this);
+  
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -77,6 +78,8 @@ class Strings_en extends Strings {
         return launches;
       case 'modal':
         return modals;
+      case 'crew':
+        return crew;
       default:
         return throw ArgumentError('Unknown key: $key');
     }
@@ -87,6 +90,7 @@ class LaunchesStrings_en extends LaunchesStrings {
   final Strings_en _parent;
   LaunchesStrings_en(this._parent);
   String get title => "Launches";
+  String get titleCrew => "Crew";
   String get searchHint => "Search by name";
   String get loading => "Loading...";
   String get error => "Something went wrong.";
@@ -103,6 +107,8 @@ class LaunchesStrings_en extends LaunchesStrings {
     switch (key) {
       case 'title':
         return title;
+      case 'titleCrew':
+        return titleCrew;
       case 'searchHint':
         return searchHint;
       case 'loading':

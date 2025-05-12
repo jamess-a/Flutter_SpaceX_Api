@@ -6,6 +6,7 @@ class AppColors {
   static const Color dustyPurple = Color(0xFF81689D);
   static const Color lightLilac = Color(0xFFFFD0EC);
   static const Color gray = Color.fromARGB(0, 102, 102, 113);
+  static const Color moon = Color.fromARGB(0, 217, 217, 217);
 
   static ThemeData get darkTheme => ThemeData(
         scaffoldBackgroundColor: darkNavy,

@@ -78,6 +78,8 @@ class Strings_th extends Strings {
 
       case 'modal':
         return modals;
+      case 'crew':
+        return crew;
       default:
         return throw ArgumentError('Unknown key: $key');
     }
@@ -88,6 +90,7 @@ class LaunchesStrings_th extends LaunchesStrings {
   final Strings_th _parent;
   LaunchesStrings_th(this._parent);
   String get title => "ตารางปล่อยจรวด";
+  String get titleCrew => "ลูกเรือ";
   String get searchHint => "ค้นหาด้วยชื่อ";
   String get loading => "กำลังโหลดข้อมูล...";
   String get error => "เกิดข้อผิดพลาดบางอย่าง";
@@ -104,6 +107,8 @@ class LaunchesStrings_th extends LaunchesStrings {
     switch (key) {
       case 'title':
         return title;
+      case 'titleCrew':
+        return titleCrew;
       case 'searchHint':
         return searchHint;
       case 'loading':

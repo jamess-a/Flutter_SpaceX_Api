@@ -3,8 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:spacex/core/presentation/widgets/connectivity_wrapper.dart';
 import 'package:spacex/core/presentation/widgets/custom_bottom_navbar.dart';
 import 'package:spacex/core/theme/app_color.dart';
+import 'package:spacex/features/crews/domain/usecase/crew_usecase.dart';
 import 'package:spacex/features/launches/presentation/pages/launch_list_page.dart';
-import 'package:spacex/features/crew/presentation/pages/crew_list_page.dart';
+import 'package:spacex/features/crews/presentation/pages/crew_list_page.dart';
 import 'package:spacex/core/di/injection_container.dart' as di;
 import 'package:spacex/features/launches/domain/usecases/use_case.dart';
 
@@ -43,7 +44,9 @@ class AppRouter {
           ),
           GoRoute(
             path: '/crew',
-            builder: (context, state) => const CrewScreen(),
+            builder: (context, state) => CrewScreen(
+              getCrewListUseCase : di.sl<GetCrewListUseCase>()
+            ),
           ),
         ],
       ),
