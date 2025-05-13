@@ -15,12 +15,25 @@ class AppRouter {
     routes: [
       ShellRoute(
         builder: (context, state, child) {
+          final currentRoute =
+              GoRouter.of(context).routeInformationProvider.value.location;
           return Scaffold(
             body: ConnectivityWrapper(child: child),
             floatingActionButton: FloatingActionButton.large(
-              backgroundColor: AppColors.slateBlue,
-              onPressed: () => context.push('/profile'),
-              tooltip: 'Profile',
+              backgroundColor:
+                  currentRoute == '/all launches'
+                      ? const Color.fromARGB(170, 255, 255, 255)
+                      : AppColors.slateBlue,
+              onPressed:
+                  () => {
+                    currentRoute == '/all launches'
+                        ? null
+                        : {
+                          print('Go to all launches'),
+                          // context.go('/all launches'),
+                        },
+                  },
+              tooltip: 'All Launches',
               elevation: 4,
               shape: const CircleBorder(),
               child: const Icon(Icons.rocket, size: 64),
@@ -44,9 +57,9 @@ class AppRouter {
           ),
           GoRoute(
             path: '/crew',
-            builder: (context, state) => CrewScreen(
-              getCrewListUseCase : di.sl<GetCrewListUseCase>()
-            ),
+            builder:
+                (context, state) =>
+                    CrewScreen(getCrewListUseCase: di.sl<GetCrewListUseCase>()),
           ),
         ],
       ),

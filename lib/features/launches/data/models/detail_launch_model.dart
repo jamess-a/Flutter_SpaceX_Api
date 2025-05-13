@@ -18,6 +18,7 @@ class GetOneLaunchModel extends LaunchDetail {
     required super.upcoming,
     required super.imageUrl,
     required super.youtubeId,
+    required super.detail
   });
 
   factory GetOneLaunchModel.fromJson(Map<String, dynamic> json) {
@@ -38,6 +39,7 @@ class GetOneLaunchModel extends LaunchDetail {
       upcoming: json['upcoming'] ?? false,
       imageUrl: json['links']?['patch']?['small'],
       youtubeId: json['links']?['youtube_id'],
+      detail: json['details'] ?? '',
     );
   }
 
@@ -58,5 +60,6 @@ class GetOneLaunchModel extends LaunchDetail {
     upcoming: upcoming,
     imageUrl: imageUrl,
     youtubeId: youtubeId,
+    detail: detail
   );
 }

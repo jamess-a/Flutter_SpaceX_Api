@@ -15,6 +15,7 @@ class LaunchDetail {
   final bool upcoming;
   final String? imageUrl;
   final String? youtubeId;
+  final String? detail;
 
   const LaunchDetail({
     required this.id,
@@ -33,5 +34,11 @@ class LaunchDetail {
     required this.upcoming,
     required this.imageUrl,
     required this.youtubeId,
+    required this.detail,
   });
+
+  String? get youtubeThumbnail =>
+      youtubeId != null
+          ? 'https://img.youtube.com/vi/$youtubeId/hqdefault.jpg'
+          : null;
 }
