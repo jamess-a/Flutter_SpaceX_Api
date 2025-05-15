@@ -1,4 +1,6 @@
-class LaunchDetail {
+import 'package:equatable/equatable.dart';
+
+class LaunchDetail extends Equatable {
   final String id;
   final String name;
   final int flightNumber;
@@ -41,4 +43,25 @@ class LaunchDetail {
       youtubeId != null
           ? 'https://img.youtube.com/vi/$youtubeId/hqdefault.jpg'
           : null;
+
+  @override
+  List<Object?> get props => [
+    id,
+    name,
+    flightNumber,
+    dateUtc,
+    patchImage,
+    webcastUrl,
+    wikipediaUrl,
+    success,
+    crewIds,
+    capsuleIds,
+    payloadIds,
+    rocketId,
+    launchpadId,
+    upcoming,
+    imageUrl,
+    youtubeId,
+    detail,
+  ];
 }

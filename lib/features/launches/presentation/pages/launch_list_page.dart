@@ -62,7 +62,10 @@ class LaunchListScreen extends StatelessWidget {
         final result = await detailUseCase.call(id);
 
         result.fold(
-          (failure) => NotificationHelper.showError(context, failure.message),
+          (failure) => NotificationHelper.showError(
+            context,
+            failure.message ?? 'no message',
+          ),
           (launch) {
             bloc.add(FetchDetailLaunch(id));
             showLaunchModalBottomSheet(context, launch, language);
@@ -97,33 +100,6 @@ class LaunchListScreen extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return Scaffold(
-            appBar: AppBar(
-              title: Text(strings.launches.title),
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: TextButton(
-                    onPressed: () => switchLanguage(context),
-                    style: TextButton.styleFrom(
-                      backgroundColor: AppColors.slateBlue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(22),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.language, color: Colors.white),
-                        const SizedBox(width: 8),
-                        Text(
-                          strings is Strings_en ? 'EN' : 'TH',
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
             body: Column(
               children: [
                 Builder(

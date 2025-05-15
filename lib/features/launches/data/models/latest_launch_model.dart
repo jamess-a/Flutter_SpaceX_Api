@@ -41,29 +41,6 @@ class LatestLaunchModel extends LatestLaunch {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'flight_number': flightNumber,
-      'date_utc': dateUtc.toIso8601String(),
-      'links': {
-        'patch': {'small': patchImage},
-        'webcast': webcastUrl,
-        'wikipedia': wikipediaUrl,
-      },
-      'success': success,
-      'crew': crewIds,
-      'capsules': capsuleIds,
-      'payloads': payloadIds,
-      'rocket': rocketId,
-      'launchpad': launchpadId,
-      'upcoming': upcoming,
-      'image_url': imageUrl,
-      'youtube_id': youtubeId,
-    };
-  }
-
   LatestLaunch toEntity() => LatestLaunch(
     id: id,
     name: name,

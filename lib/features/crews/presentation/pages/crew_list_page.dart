@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:spacex/core/utils/notifications_helper.dart';
 import 'package:spacex/features/crews/domain/usecase/crew_usecase.dart';
 import 'package:spacex/features/crews/presentation/bloc/crews/crews_list_bloc.dart';
@@ -18,19 +17,8 @@ class CrewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final strings = context.watch<LanguageCubit>().state;
     final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('${strings.launches.titleCrew}'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            if (context.canPop()) {
-              context.pop();
-            }
-          },
-        ),
-      ),
       body: MultiBlocProvider(
         providers: [
           BlocProvider<CrewsListBloc>(
@@ -39,7 +27,6 @@ class CrewScreen extends StatelessWidget {
                     CrewsListBloc(getCrewListUseCase.call)..add(FetchCrews()),
           ),
         ],
-
         child: Builder(
           builder:
               (context) => Column(

@@ -24,7 +24,7 @@ class LaunchRepositoryImpl implements LaunchRepository {
       final launches = models.map((m) => m.toEntity()).toList();
       return Right(launches);
     } catch (e) {
-      return Left(ServerFailure('Exception: ${e.toString()}'));
+      return Left(ServerFailure(e.toString()));
     }
   }
 
@@ -35,7 +35,7 @@ class LaunchRepositoryImpl implements LaunchRepository {
       final latestLaunch = model.toEntity();
       return Right(latestLaunch);
     } catch (e) {
-      return Left(ServerFailure('Exception: ${e.toString()}'));
+      return Left(ServerFailure(e.toString()));
     }
   }
 
@@ -46,7 +46,7 @@ class LaunchRepositoryImpl implements LaunchRepository {
       final detailLaunch = model.toEntity();
       return Right(detailLaunch);
     } catch (e) {
-      return Left(ServerFailure('Server fail ${e.toString()}'));
+      return Left(ServerFailure(e.toString()));
     }
   }
 }

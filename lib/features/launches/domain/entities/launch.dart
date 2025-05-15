@@ -1,4 +1,6 @@
-class Launch {
+import 'package:equatable/equatable.dart';
+
+class Launch extends Equatable{
   final String? id;
   final String name;
   final DateTime dateUtc;
@@ -14,4 +16,14 @@ class Launch {
     required this.success,
     required this.upcoming
   });
+
+  @override
+  List<Object?> get props => [
+    id,
+    name,
+    dateUtc,
+    imageUrl,
+    success,
+    upcoming,
+  ];
 }

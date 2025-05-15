@@ -1,7 +1,7 @@
 import 'package:spacex/features/launches/domain/entities/launch_detail.dart';
 
-class GetOneLaunchModel extends LaunchDetail {
-  GetOneLaunchModel({
+class DetailLaunchModel extends LaunchDetail {
+  DetailLaunchModel({
     required super.id,
     required super.name,
     required super.flightNumber,
@@ -21,8 +21,8 @@ class GetOneLaunchModel extends LaunchDetail {
     required super.detail
   });
 
-  factory GetOneLaunchModel.fromJson(Map<String, dynamic> json) {
-    return GetOneLaunchModel(
+  factory DetailLaunchModel.fromJson(Map<String, dynamic> json) {
+    return DetailLaunchModel(
       id: json['id'] ?? '',
       name: json['name'] ?? '',
       flightNumber: json['flight_number'] ?? 0,

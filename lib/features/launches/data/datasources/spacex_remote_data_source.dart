@@ -41,7 +41,7 @@ class LaunchRemoteDataSource {
     return LatestLaunchModel.fromJson(jsonData);
   }
 
-  Future<GetOneLaunchModel> fetchOneLaunch(String id) async {
+  Future<DetailLaunchModel> fetchOneLaunch(String id) async {
     print('Fetch ${id}');
     final response = await client.get(
       Uri.parse('https://api.spacexdata.com/v4/launches/$id'),
@@ -51,6 +51,6 @@ class LaunchRemoteDataSource {
     }
     final jsonData = json.decode(response.body);
     print('data${jsonData}');
-    return GetOneLaunchModel.fromJson(jsonData);
+    return DetailLaunchModel.fromJson(jsonData);
   }
 }

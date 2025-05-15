@@ -1,13 +1,23 @@
-// lib/core/error/failure.dart
 abstract class Failure {
-  final String message;
-  Failure(this.message);
+  final String? message;
+
+  Failure([this.message]);
+
+  @override
+  String toString() => message ?? runtimeType.toString();
 }
 
 class ServerFailure extends Failure {
-  ServerFailure(String message) : super(message);
+  ServerFailure([super.message]);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || (other is ServerFailure && other.message == message);
+
+  @override
+  int get hashCode => message.hashCode;
 }
 
 class NetworkFailure extends Failure {
-  NetworkFailure(String message) : super(message);
+  NetworkFailure([super.message]);
 }

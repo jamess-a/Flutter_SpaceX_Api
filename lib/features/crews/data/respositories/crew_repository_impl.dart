@@ -23,7 +23,7 @@ class CrewRepositoryImpl implements CrewRepository {
       return Right(crews);
     } catch (e) {
       print(e);
-      return Left(ServerFailure('Exception: ${e.toString()}'));
+      return Left(ServerFailure(e.toString()));
     }
   }
 }

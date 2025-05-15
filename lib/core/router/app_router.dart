@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spacex/core/presentation/widgets/connectivity_wrapper.dart';
 import 'package:spacex/core/presentation/widgets/custom_bottom_navbar.dart';
 import 'package:spacex/core/theme/app_color.dart';
+import 'package:spacex/core/utils/notifications_helper.dart';
 import 'package:spacex/features/crews/domain/usecase/crew_usecase.dart';
 import 'package:spacex/features/launches/presentation/pages/launch_list_page.dart';
 import 'package:spacex/features/crews/presentation/pages/crew_list_page.dart';
 import 'package:spacex/core/di/injection_container.dart' as di;
 import 'package:spacex/features/launches/domain/usecases/use_case.dart';
+import 'package:spacex/localization/localization_cubit.dart';
+import 'package:spacex/localization/strings_base.dart';
+import 'package:spacex/localization/strings_en.i69n.dart';
 
 class AppRouter {
+  static void switchLanguage(BuildContext context) {
+    context.read<LanguageCubit>().toggleLanguage();
+
+    final strings = context.read<LanguageCubit>().state;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      NotificationHelper.showSuccess(
+        context,
+        "Switched language to ${strings is Strings_en ? 'TH' : 'EN'}",
+      );
+    });
+  }
+
   static final router = GoRouter(
     initialLocation: '/home',
     routes: [
@@ -17,7 +34,36 @@ class AppRouter {
         builder: (context, state, child) {
           final currentRoute =
               GoRouter.of(context).routeInformationProvider.value.location;
-          return Scaffold(
+          final strings = context.watch<LanguageCubit>().state;
+          return 
+          Scaffold(
+            appBar: AppBar(
+              title: Text('Space X'),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: TextButton(
+                    onPressed: () => switchLanguage(context),
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColors.slateBlue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(22),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.language, color: Colors.white),
+                        const SizedBox(width: 8),
+                        Text(
+                          strings is Strings_en ? 'EN' : 'TH',
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
             body: ConnectivityWrapper(child: child),
             floatingActionButton: FloatingActionButton.large(
               backgroundColor:

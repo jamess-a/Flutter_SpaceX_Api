@@ -1,4 +1,6 @@
-class Crew {
+import 'package:equatable/equatable.dart';
+
+class Crew extends Equatable {
   final String id;
   final String name;
   final String agency;
@@ -16,4 +18,15 @@ class Crew {
     required this.launches,
     required this.status,
   });
+
+  @override
+  List<Object?> get props => [
+    id,
+    name,
+    agency,
+    imageUrl,
+    wikipediaUrl,
+    launches,
+    status,
+  ];
 }

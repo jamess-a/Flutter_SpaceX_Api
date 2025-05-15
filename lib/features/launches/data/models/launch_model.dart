@@ -21,19 +21,6 @@ class LaunchModel extends Launch {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'date_utc': dateUtc.toIso8601String(),
-      'links': {
-        'patch': {'small': imageUrl},
-      },
-      'success': success,
-      'upcoming': upcoming,
-    };
-  }
-
   Launch toEntity() => Launch(
     id: id,
     name: name,

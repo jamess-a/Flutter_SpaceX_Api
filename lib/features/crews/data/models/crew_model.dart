@@ -11,7 +11,6 @@ class CrewModel extends Crew {
     required super.status,
   });
 
-
   factory CrewModel.fromJson(Map<String, dynamic> json) {
     return CrewModel(
       id: json['id'],
@@ -22,18 +21,6 @@ class CrewModel extends Crew {
       launches: List<String>.from(json['launches'] ?? []),
       status: json['status'],
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'agency': agency,
-      'image': imageUrl,
-      'wikipedia': wikipediaUrl,
-      'launches': launches,
-      'status': status,
-    };
   }
 
   Crew toEntity() => Crew(

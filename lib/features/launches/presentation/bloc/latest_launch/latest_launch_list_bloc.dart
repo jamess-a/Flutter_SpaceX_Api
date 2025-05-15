@@ -21,7 +21,7 @@ class LatestLaunchBloc extends Bloc<LatestLaunchEvent, LatestLaunchState> {
     final result = await getLatestLaunch();
 
     result.fold(
-      (failure) => emit(LatestLaunchError(failure.message)),
+      (failure) => emit(LatestLaunchError(failure.message ?? 'no message')),
       (launch) => emit(LatestLaunchLoaded(launch)),
     );
   }

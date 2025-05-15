@@ -48,6 +48,12 @@ class _SearchLaunchWidgetState extends State<SearchCrewWidget> {
     });
   }
 
+  // void handleSerch (String query) {
+  //   if (query.isEmpty){
+  //     context.read<CrewListBloc>().add(query);
+  //   } 
+  // }
+
   @override
   Widget build(BuildContext context) {
     Strings strings = widget.string;

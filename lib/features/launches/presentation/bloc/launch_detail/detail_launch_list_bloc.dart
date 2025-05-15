@@ -21,7 +21,7 @@ class DetailLaunchBloc extends Bloc<DetailLaunchEvent, DetailLaunchState> {
     final result = await getDetailLaunch(id);
 
     result.fold(
-      (failure) => emit(LaunchDetailError(failure.message)),
+      (failure) => emit(LaunchDetailError(failure.message ?? 'no message')),
       (launch) => emit(LaunchDetailLoaded(launch)),
     );
   }
