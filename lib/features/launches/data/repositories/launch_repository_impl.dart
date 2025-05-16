@@ -4,6 +4,7 @@ import 'package:spacex/features/launches/data/datasources/spacex_remote_data_sou
 import 'package:spacex/features/launches/domain/entities/latest_launch.dart';
 import 'package:spacex/features/launches/domain/entities/launch.dart';
 import 'package:spacex/features/launches/domain/entities/launch_detail.dart';
+import 'package:spacex/features/launches/domain/entities/rocket_detail.dart';
 import 'package:spacex/features/launches/domain/repositories/launch_repository.dart';
 
 class LaunchRepositoryImpl implements LaunchRepository {
@@ -49,4 +50,16 @@ class LaunchRepositoryImpl implements LaunchRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, RocketDetail>> getDetailRocket(String id) async {
+    try {
+      final model = await remoteDataSource.fetchOneRocket(id);
+      final detailRocket = model.toEntity();
+      return Right(detailRocket);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+  
 }

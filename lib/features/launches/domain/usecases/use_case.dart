@@ -1,6 +1,7 @@
 import 'package:spacex/features/launches/domain/entities/latest_launch.dart';
 import 'package:spacex/features/launches/domain/entities/launch.dart';
 import 'package:spacex/features/launches/domain/entities/launch_detail.dart';
+import 'package:spacex/features/launches/domain/entities/rocket_detail.dart';
 import 'package:spacex/features/launches/domain/repositories/launch_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:spacex/core/error/failures.dart';
@@ -35,5 +36,15 @@ class GetDetailLaunchUseCase {
 
   Future<Either<Failure, LaunchDetail>> call(String id) {
     return repository.getDetailLaunch(id);
+  }
+}
+
+class GetDetailRocketUseCase {
+  final LaunchRepository repository;
+
+  GetDetailRocketUseCase(this.repository);
+
+  Future<Either<Failure, RocketDetail>> call(String id) {
+    return repository.getDetailRocket(id);
   }
 }

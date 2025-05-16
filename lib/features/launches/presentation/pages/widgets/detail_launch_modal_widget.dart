@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:spacex/core/theme/app_color.dart';
 import 'package:spacex/features/launches/domain/entities/launch_detail.dart';
+import 'package:spacex/features/launches/domain/entities/rocket_detail.dart';
+import 'package:spacex/features/launches/presentation/pages/widgets/detail_rocket_section_widget.dart';
 import 'package:spacex/localization/strings_base.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void showLaunchModalBottomSheet(
   BuildContext context,
   LaunchDetail launch,
+  RocketDetail rocket,
   Strings strings,
 ) {
   final width = MediaQuery.of(context).size.width;
@@ -277,12 +280,17 @@ void showLaunchModalBottomSheet(
                         label: const Text('Watch on Webcast'),
                         onPressed: () => _launchUrl(launch.webcastUrl!),
                       ),
+                    RocketDetailSection(rocket: rocket),
+
                     //------------------------------- Links
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: const Text('Close'),
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('Close'),
+                        ),
+                      ],
                     ),
                   ],
                 ),

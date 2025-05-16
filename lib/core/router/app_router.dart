@@ -11,7 +11,6 @@ import 'package:spacex/features/crews/presentation/pages/crew_list_page.dart';
 import 'package:spacex/core/di/injection_container.dart' as di;
 import 'package:spacex/features/launches/domain/usecases/use_case.dart';
 import 'package:spacex/localization/localization_cubit.dart';
-import 'package:spacex/localization/strings_base.dart';
 import 'package:spacex/localization/strings_en.i69n.dart';
 
 class AppRouter {
@@ -32,8 +31,7 @@ class AppRouter {
     routes: [
       ShellRoute(
         builder: (context, state, child) {
-          final currentRoute =
-              GoRouter.of(context).routeInformationProvider.value.location;
+          final currentRoute = state.fullPath ?? '';
           final strings = context.watch<LanguageCubit>().state;
           return 
           Scaffold(
@@ -88,6 +86,7 @@ class AppRouter {
                 FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: CustomBottomNav(
               onCrewTap: () => context.push('/crew'),
+              currentRoute: currentRoute,
             ),
           );
         },
@@ -99,6 +98,7 @@ class AppRouter {
                   useCase: di.sl<GetLaunchListUseCase>(),
                   latestUseCase: di.sl<GetLatestLaunchUseCase>(),
                   detailUseCase: di.sl<GetDetailLaunchUseCase>(),
+                  rockdetailUseCase: di.sl<GetDetailRocketUseCase>()
                 ),
           ),
           GoRoute(

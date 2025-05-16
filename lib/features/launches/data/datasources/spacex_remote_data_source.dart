@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:spacex/features/launches/data/models/detail_rocket_model.dart';
 import 'package:spacex/features/launches/data/models/latest_launch_model.dart';
 import 'package:spacex/features/launches/data/models/launch_model.dart';
 import 'package:spacex/features/launches/data/models/detail_launch_model.dart';
@@ -42,7 +43,6 @@ class LaunchRemoteDataSource {
   }
 
   Future<DetailLaunchModel> fetchOneLaunch(String id) async {
-    print('Fetch ${id}');
     final response = await client.get(
       Uri.parse('https://api.spacexdata.com/v4/launches/$id'),
     );
@@ -50,7 +50,17 @@ class LaunchRemoteDataSource {
       throw Exception('Failed to load launches');
     }
     final jsonData = json.decode(response.body);
-    print('data${jsonData}');
     return DetailLaunchModel.fromJson(jsonData);
+  }
+
+  Future<DetailRocketModel> fetchOneRocket(String id) async {
+    final response = await client.get(
+      Uri.parse('https://api.spacexdata.com/v4/rockets/$id'),
+    );
+    if (response.statusCode != 200) {
+      throw Exception('Failed to load launches');
+    }
+    final jsonData = json.decode(response.body);
+    return DetailRocketModel.fromJson(jsonData);
   }
 }

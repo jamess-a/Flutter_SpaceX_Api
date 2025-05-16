@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spacex/core/theme/app_color.dart';
 import 'package:spacex/core/utils/dateformator.dart';
 import 'package:spacex/core/utils/notifications_helper.dart';
+import 'package:spacex/features/launches/domain/entities/rocket_detail.dart';
 import 'package:spacex/features/launches/domain/usecases/use_case.dart';
 import 'package:spacex/features/launches/presentation/bloc/latest_launch/latest_launch_list_bloc.dart';
 import 'package:spacex/features/launches/presentation/bloc/latest_launch/latest_launch_list_event.dart';
@@ -23,11 +24,13 @@ class LaunchListScreen extends StatelessWidget {
   final GetLaunchListUseCase useCase;
   final GetLatestLaunchUseCase latestUseCase;
   final GetDetailLaunchUseCase detailUseCase;
+  final GetDetailRocketUseCase rockdetailUseCase;
   const LaunchListScreen({
     super.key,
     required this.useCase,
     required this.latestUseCase,
     required this.detailUseCase,
+    required this.rockdetailUseCase,
   });
 
   @override
@@ -48,7 +51,7 @@ class LaunchListScreen extends StatelessWidget {
     }
 
     void handleOpenModal(BuildContext context, String id) async {
-      final bloc = context.read<DetailLaunchBloc>();
+      final launchBloc = context.read<DetailLaunchBloc>();
       final navigator = Navigator.of(context, rootNavigator: true);
       final language = context.read<LanguageCubit>().state;
 
@@ -59,16 +62,32 @@ class LaunchListScreen extends StatelessWidget {
       );
 
       try {
-        final result = await detailUseCase.call(id);
+        final launchResult = await detailUseCase.call(id);
 
-        result.fold(
-          (failure) => NotificationHelper.showError(
-            context,
-            failure.message ?? 'no message',
-          ),
-          (launch) {
-            bloc.add(FetchDetailLaunch(id));
-            showLaunchModalBottomSheet(context, launch, language);
+        await launchResult.fold(
+          (failure) {
+            NotificationHelper.showError(
+              context,
+              failure.message ?? 'no message',
+            );
+          },
+          (launch) async {
+            RocketDetail? rocket;
+            final rocketId = launch.rocketId;
+            if (rocketId.isNotEmpty) {
+              final rocketResult = await rockdetailUseCase.call(rocketId);
+              rocketResult.fold((rocketFailure) {
+                NotificationHelper.showError(
+                  context,
+                  rocketFailure.message ?? 'Rocket info unavailable',
+                );
+              }, (r) => rocket = r);
+            }
+
+            print(rocket);
+
+            launchBloc.add(FetchDetailLaunch(id));
+            showLaunchModalBottomSheet(context, launch, rocket!, language);
           },
         );
       } catch (e) {
