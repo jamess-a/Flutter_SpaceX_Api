@@ -18,7 +18,7 @@ import 'package:spacex/features/launches/presentation/pages/widgets/search_launc
 import 'package:spacex/features/launches/presentation/pages/widgets/live_launch_widget.dart';
 
 import 'package:spacex/localization/localization_cubit.dart';
-import 'package:spacex/localization/strings_en.i69n.dart';
+import 'package:spacex/localization/generated/strings_en.i69n.dart';
 
 class LaunchListScreen extends StatelessWidget {
   final GetLaunchListUseCase useCase;

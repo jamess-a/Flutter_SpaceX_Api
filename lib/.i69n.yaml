@@ -1,0 +1,3 @@
+source: lib/localization/i18n/
+output: lib/localization/generated/
+locale_file_pattern: 'strings_*.yaml'

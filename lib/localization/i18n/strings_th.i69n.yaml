@@ -1,6 +1,10 @@
 launches:
   title: ตารางปล่อยจรวด
+  titleCrew: ลูกเรือ
   searchHint: ค้นหาด้วยชื่อ
   loading: กำลังโหลดข้อมูล...
   error: เกิดข้อผิดพลาดบางอย่าง
   success: สําเร็จ
+  failed: ล้มเหลว
+  livelaunch: ถ่ายทอดสด
+  emptyResult: ไม่พบข้อมูล

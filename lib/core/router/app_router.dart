@@ -4,26 +4,17 @@ import 'package:go_router/go_router.dart';
 import 'package:spacex/core/presentation/widgets/connectivity_wrapper.dart';
 import 'package:spacex/core/presentation/widgets/custom_bottom_navbar.dart';
 import 'package:spacex/core/theme/app_color.dart';
-import 'package:spacex/core/utils/notifications_helper.dart';
 import 'package:spacex/features/crews/domain/usecase/crew_usecase.dart';
 import 'package:spacex/features/launches/presentation/pages/launch_list_page.dart';
 import 'package:spacex/features/crews/presentation/pages/crew_list_page.dart';
 import 'package:spacex/core/di/injection_container.dart' as di;
 import 'package:spacex/features/launches/domain/usecases/use_case.dart';
 import 'package:spacex/localization/localization_cubit.dart';
-import 'package:spacex/localization/strings_en.i69n.dart';
+import 'package:spacex/localization/generated/strings_en.i69n.dart';
 
 class AppRouter {
   static void switchLanguage(BuildContext context) {
-    context.read<LanguageCubit>().toggleLanguage();
-
-    final strings = context.read<LanguageCubit>().state;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      NotificationHelper.showSuccess(
-        context,
-        "Switched language to ${strings is Strings_en ? 'TH' : 'EN'}",
-      );
-    });
+    context.read<LanguageCubit>().toggleLanguage();  
   }
 
   static final router = GoRouter(

@@ -1,6 +1,10 @@
 launches:
   title: Launches
+  titleCrew: Crews
   searchHint: Search by name
   loading: Loading...
   error: Something went wrong.
   success: Success
+  failed: Failed
+  livelaunch: Live Launch
+  emptyResult: No result

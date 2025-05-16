@@ -3,36 +3,40 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i7;
-import 'dart:convert' as _i19;
-import 'dart:typed_data' as _i21;
+import 'dart:async' as _i8;
+import 'dart:convert' as _i21;
+import 'dart:typed_data' as _i23;
 
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:http/http.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i20;
-import 'package:spacex/core/error/failures.dart' as _i8;
-import 'package:spacex/core/network/network_info.dart' as _i18;
+import 'package:mockito/src/dummies.dart' as _i22;
+import 'package:spacex/core/error/failures.dart' as _i9;
+import 'package:spacex/core/network/network_info.dart' as _i20;
 import 'package:spacex/features/crews/data/datasources/crew_remote_data_source.dart'
-    as _i16;
-import 'package:spacex/features/crews/data/models/crew_model.dart' as _i17;
-import 'package:spacex/features/crews/domain/entities/crew.dart' as _i15;
+    as _i18;
+import 'package:spacex/features/crews/data/models/crew_model.dart' as _i19;
+import 'package:spacex/features/crews/domain/entities/crew.dart' as _i17;
 import 'package:spacex/features/crews/domain/respositories/crew_repository.dart'
-    as _i14;
+    as _i16;
 import 'package:spacex/features/launches/data/datasources/spacex_remote_data_source.dart'
-    as _i12;
+    as _i14;
 import 'package:spacex/features/launches/data/models/detail_launch_model.dart'
     as _i5;
+import 'package:spacex/features/launches/data/models/detail_rocket_model.dart'
+    as _i6;
 import 'package:spacex/features/launches/data/models/latest_launch_model.dart'
     as _i4;
-import 'package:spacex/features/launches/data/models/launch_model.dart' as _i13;
+import 'package:spacex/features/launches/data/models/launch_model.dart' as _i15;
 import 'package:spacex/features/launches/domain/entities/latest_launch.dart'
-    as _i10;
-import 'package:spacex/features/launches/domain/entities/launch.dart' as _i9;
-import 'package:spacex/features/launches/domain/entities/launch_detail.dart'
     as _i11;
+import 'package:spacex/features/launches/domain/entities/launch.dart' as _i10;
+import 'package:spacex/features/launches/domain/entities/launch_detail.dart'
+    as _i12;
+import 'package:spacex/features/launches/domain/entities/rocket_detail.dart'
+    as _i13;
 import 'package:spacex/features/launches/domain/repositories/launch_repository.dart'
-    as _i6;
+    as _i7;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -90,8 +94,9 @@ class _FakeDetailLaunchModel_3 extends _i1.SmartFake
         );
 }
 
-class _FakeResponse_4 extends _i1.SmartFake implements _i3.Response {
-  _FakeResponse_4(
+class _FakeDetailRocketModel_4 extends _i1.SmartFake
+    implements _i6.DetailRocketModel {
+  _FakeDetailRocketModel_4(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -100,9 +105,19 @@ class _FakeResponse_4 extends _i1.SmartFake implements _i3.Response {
         );
 }
 
-class _FakeStreamedResponse_5 extends _i1.SmartFake
+class _FakeResponse_5 extends _i1.SmartFake implements _i3.Response {
+  _FakeResponse_5(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeStreamedResponse_6 extends _i1.SmartFake
     implements _i3.StreamedResponse {
-  _FakeStreamedResponse_5(
+  _FakeStreamedResponse_6(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -114,13 +129,13 @@ class _FakeStreamedResponse_5 extends _i1.SmartFake
 /// A class which mocks [LaunchRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockLaunchRepository extends _i1.Mock implements _i6.LaunchRepository {
+class MockLaunchRepository extends _i1.Mock implements _i7.LaunchRepository {
   MockLaunchRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i7.Future<_i2.Either<_i8.Failure, List<_i9.Launch>>> getLaunches({
+  _i8.Future<_i2.Either<_i9.Failure, List<_i10.Launch>>> getLaunches({
     Map<String, dynamic>? query,
     Map<String, dynamic>? options,
   }) =>
@@ -134,8 +149,8 @@ class MockLaunchRepository extends _i1.Mock implements _i6.LaunchRepository {
           },
         ),
         returnValue:
-            _i7.Future<_i2.Either<_i8.Failure, List<_i9.Launch>>>.value(
-                _FakeEither_0<_i8.Failure, List<_i9.Launch>>(
+            _i8.Future<_i2.Either<_i9.Failure, List<_i10.Launch>>>.value(
+                _FakeEither_0<_i9.Failure, List<_i10.Launch>>(
           this,
           Invocation.method(
             #getLaunches,
@@ -146,28 +161,28 @@ class MockLaunchRepository extends _i1.Mock implements _i6.LaunchRepository {
             },
           ),
         )),
-      ) as _i7.Future<_i2.Either<_i8.Failure, List<_i9.Launch>>>);
+      ) as _i8.Future<_i2.Either<_i9.Failure, List<_i10.Launch>>>);
 
   @override
-  _i7.Future<_i2.Either<_i8.Failure, _i10.LatestLaunch>> getLatestLaunch() =>
+  _i8.Future<_i2.Either<_i9.Failure, _i11.LatestLaunch>> getLatestLaunch() =>
       (super.noSuchMethod(
         Invocation.method(
           #getLatestLaunch,
           [],
         ),
         returnValue:
-            _i7.Future<_i2.Either<_i8.Failure, _i10.LatestLaunch>>.value(
-                _FakeEither_0<_i8.Failure, _i10.LatestLaunch>(
+            _i8.Future<_i2.Either<_i9.Failure, _i11.LatestLaunch>>.value(
+                _FakeEither_0<_i9.Failure, _i11.LatestLaunch>(
           this,
           Invocation.method(
             #getLatestLaunch,
             [],
           ),
         )),
-      ) as _i7.Future<_i2.Either<_i8.Failure, _i10.LatestLaunch>>);
+      ) as _i8.Future<_i2.Either<_i9.Failure, _i11.LatestLaunch>>);
 
   @override
-  _i7.Future<_i2.Either<_i8.Failure, _i11.LaunchDetail>> getDetailLaunch(
+  _i8.Future<_i2.Either<_i9.Failure, _i12.LaunchDetail>> getDetailLaunch(
           String? id) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -175,22 +190,41 @@ class MockLaunchRepository extends _i1.Mock implements _i6.LaunchRepository {
           [id],
         ),
         returnValue:
-            _i7.Future<_i2.Either<_i8.Failure, _i11.LaunchDetail>>.value(
-                _FakeEither_0<_i8.Failure, _i11.LaunchDetail>(
+            _i8.Future<_i2.Either<_i9.Failure, _i12.LaunchDetail>>.value(
+                _FakeEither_0<_i9.Failure, _i12.LaunchDetail>(
           this,
           Invocation.method(
             #getDetailLaunch,
             [id],
           ),
         )),
-      ) as _i7.Future<_i2.Either<_i8.Failure, _i11.LaunchDetail>>);
+      ) as _i8.Future<_i2.Either<_i9.Failure, _i12.LaunchDetail>>);
+
+  @override
+  _i8.Future<_i2.Either<_i9.Failure, _i13.RocketDetail>> getDetailRocket(
+          String? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getDetailRocket,
+          [id],
+        ),
+        returnValue:
+            _i8.Future<_i2.Either<_i9.Failure, _i13.RocketDetail>>.value(
+                _FakeEither_0<_i9.Failure, _i13.RocketDetail>(
+          this,
+          Invocation.method(
+            #getDetailRocket,
+            [id],
+          ),
+        )),
+      ) as _i8.Future<_i2.Either<_i9.Failure, _i13.RocketDetail>>);
 }
 
 /// A class which mocks [LaunchRemoteDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockLaunchRemoteDataSource extends _i1.Mock
-    implements _i12.LaunchRemoteDataSource {
+    implements _i14.LaunchRemoteDataSource {
   MockLaunchRemoteDataSource() {
     _i1.throwOnMissingStub(this);
   }
@@ -205,7 +239,7 @@ class MockLaunchRemoteDataSource extends _i1.Mock
       ) as _i3.Client);
 
   @override
-  _i7.Future<List<_i13.LaunchModel>> fetchLaunches({
+  _i8.Future<List<_i15.LaunchModel>> fetchLaunches({
     Map<String, dynamic>? query,
     Map<String, dynamic>? options,
   }) =>
@@ -219,53 +253,70 @@ class MockLaunchRemoteDataSource extends _i1.Mock
           },
         ),
         returnValue:
-            _i7.Future<List<_i13.LaunchModel>>.value(<_i13.LaunchModel>[]),
-      ) as _i7.Future<List<_i13.LaunchModel>>);
+            _i8.Future<List<_i15.LaunchModel>>.value(<_i15.LaunchModel>[]),
+      ) as _i8.Future<List<_i15.LaunchModel>>);
 
   @override
-  _i7.Future<_i4.LatestLaunchModel> fetchLatestLaunch() => (super.noSuchMethod(
+  _i8.Future<_i4.LatestLaunchModel> fetchLatestLaunch() => (super.noSuchMethod(
         Invocation.method(
           #fetchLatestLaunch,
           [],
         ),
         returnValue:
-            _i7.Future<_i4.LatestLaunchModel>.value(_FakeLatestLaunchModel_2(
+            _i8.Future<_i4.LatestLaunchModel>.value(_FakeLatestLaunchModel_2(
           this,
           Invocation.method(
             #fetchLatestLaunch,
             [],
           ),
         )),
-      ) as _i7.Future<_i4.LatestLaunchModel>);
+      ) as _i8.Future<_i4.LatestLaunchModel>);
 
   @override
-  _i7.Future<_i5.DetailLaunchModel> fetchOneLaunch(String? id) =>
+  _i8.Future<_i5.DetailLaunchModel> fetchOneLaunch(String? id) =>
       (super.noSuchMethod(
         Invocation.method(
           #fetchOneLaunch,
           [id],
         ),
         returnValue:
-            _i7.Future<_i5.DetailLaunchModel>.value(_FakeDetailLaunchModel_3(
+            _i8.Future<_i5.DetailLaunchModel>.value(_FakeDetailLaunchModel_3(
           this,
           Invocation.method(
             #fetchOneLaunch,
             [id],
           ),
         )),
-      ) as _i7.Future<_i5.DetailLaunchModel>);
+      ) as _i8.Future<_i5.DetailLaunchModel>);
+
+  @override
+  _i8.Future<_i6.DetailRocketModel> fetchOneRocket(String? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #fetchOneRocket,
+          [id],
+        ),
+        returnValue:
+            _i8.Future<_i6.DetailRocketModel>.value(_FakeDetailRocketModel_4(
+          this,
+          Invocation.method(
+            #fetchOneRocket,
+            [id],
+          ),
+        )),
+      ) as _i8.Future<_i6.DetailRocketModel>);
 }
 
 /// A class which mocks [CrewRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockCrewRepository extends _i1.Mock implements _i14.CrewRepository {
+class MockCrewRepository extends _i1.Mock implements _i16.CrewRepository {
   MockCrewRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i7.Future<_i2.Either<_i8.Failure, List<_i15.Crew>>> getCrews({
+  _i8.Future<_i2.Either<_i9.Failure, List<_i17.Crew>>> getCrews({
     Map<String, dynamic>? query,
     Map<String, dynamic>? options,
   }) =>
@@ -278,8 +329,8 @@ class MockCrewRepository extends _i1.Mock implements _i14.CrewRepository {
             #options: options,
           },
         ),
-        returnValue: _i7.Future<_i2.Either<_i8.Failure, List<_i15.Crew>>>.value(
-            _FakeEither_0<_i8.Failure, List<_i15.Crew>>(
+        returnValue: _i8.Future<_i2.Either<_i9.Failure, List<_i17.Crew>>>.value(
+            _FakeEither_0<_i9.Failure, List<_i17.Crew>>(
           this,
           Invocation.method(
             #getCrews,
@@ -290,14 +341,14 @@ class MockCrewRepository extends _i1.Mock implements _i14.CrewRepository {
             },
           ),
         )),
-      ) as _i7.Future<_i2.Either<_i8.Failure, List<_i15.Crew>>>);
+      ) as _i8.Future<_i2.Either<_i9.Failure, List<_i17.Crew>>>);
 }
 
 /// A class which mocks [CrewsRemoteDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockCrewsRemoteDataSource extends _i1.Mock
-    implements _i16.CrewsRemoteDataSource {
+    implements _i18.CrewsRemoteDataSource {
   MockCrewsRemoteDataSource() {
     _i1.throwOnMissingStub(this);
   }
@@ -312,7 +363,7 @@ class MockCrewsRemoteDataSource extends _i1.Mock
       ) as _i3.Client);
 
   @override
-  _i7.Future<List<_i17.CrewModel>> fetchCrews({
+  _i8.Future<List<_i19.CrewModel>> fetchCrews({
     Map<String, dynamic>? query,
     Map<String, dynamic>? options,
   }) =>
@@ -325,23 +376,23 @@ class MockCrewsRemoteDataSource extends _i1.Mock
             #options: options,
           },
         ),
-        returnValue: _i7.Future<List<_i17.CrewModel>>.value(<_i17.CrewModel>[]),
-      ) as _i7.Future<List<_i17.CrewModel>>);
+        returnValue: _i8.Future<List<_i19.CrewModel>>.value(<_i19.CrewModel>[]),
+      ) as _i8.Future<List<_i19.CrewModel>>);
 }
 
 /// A class which mocks [NetworkInfo].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockNetworkInfo extends _i1.Mock implements _i18.NetworkInfo {
+class MockNetworkInfo extends _i1.Mock implements _i20.NetworkInfo {
   MockNetworkInfo() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i7.Future<bool> get isConnected => (super.noSuchMethod(
+  _i8.Future<bool> get isConnected => (super.noSuchMethod(
         Invocation.getter(#isConnected),
-        returnValue: _i7.Future<bool>.value(false),
-      ) as _i7.Future<bool>);
+        returnValue: _i8.Future<bool>.value(false),
+      ) as _i8.Future<bool>);
 }
 
 /// A class which mocks [Client].
@@ -353,7 +404,7 @@ class MockClient extends _i1.Mock implements _i3.Client {
   }
 
   @override
-  _i7.Future<_i3.Response> head(
+  _i8.Future<_i3.Response> head(
     Uri? url, {
     Map<String, String>? headers,
   }) =>
@@ -363,7 +414,7 @@ class MockClient extends _i1.Mock implements _i3.Client {
           [url],
           {#headers: headers},
         ),
-        returnValue: _i7.Future<_i3.Response>.value(_FakeResponse_4(
+        returnValue: _i8.Future<_i3.Response>.value(_FakeResponse_5(
           this,
           Invocation.method(
             #head,
@@ -371,10 +422,10 @@ class MockClient extends _i1.Mock implements _i3.Client {
             {#headers: headers},
           ),
         )),
-      ) as _i7.Future<_i3.Response>);
+      ) as _i8.Future<_i3.Response>);
 
   @override
-  _i7.Future<_i3.Response> get(
+  _i8.Future<_i3.Response> get(
     Uri? url, {
     Map<String, String>? headers,
   }) =>
@@ -384,7 +435,7 @@ class MockClient extends _i1.Mock implements _i3.Client {
           [url],
           {#headers: headers},
         ),
-        returnValue: _i7.Future<_i3.Response>.value(_FakeResponse_4(
+        returnValue: _i8.Future<_i3.Response>.value(_FakeResponse_5(
           this,
           Invocation.method(
             #get,
@@ -392,14 +443,14 @@ class MockClient extends _i1.Mock implements _i3.Client {
             {#headers: headers},
           ),
         )),
-      ) as _i7.Future<_i3.Response>);
+      ) as _i8.Future<_i3.Response>);
 
   @override
-  _i7.Future<_i3.Response> post(
+  _i8.Future<_i3.Response> post(
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i19.Encoding? encoding,
+    _i21.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -411,7 +462,7 @@ class MockClient extends _i1.Mock implements _i3.Client {
             #encoding: encoding,
           },
         ),
-        returnValue: _i7.Future<_i3.Response>.value(_FakeResponse_4(
+        returnValue: _i8.Future<_i3.Response>.value(_FakeResponse_5(
           this,
           Invocation.method(
             #post,
@@ -423,14 +474,14 @@ class MockClient extends _i1.Mock implements _i3.Client {
             },
           ),
         )),
-      ) as _i7.Future<_i3.Response>);
+      ) as _i8.Future<_i3.Response>);
 
   @override
-  _i7.Future<_i3.Response> put(
+  _i8.Future<_i3.Response> put(
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i19.Encoding? encoding,
+    _i21.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -442,7 +493,7 @@ class MockClient extends _i1.Mock implements _i3.Client {
             #encoding: encoding,
           },
         ),
-        returnValue: _i7.Future<_i3.Response>.value(_FakeResponse_4(
+        returnValue: _i8.Future<_i3.Response>.value(_FakeResponse_5(
           this,
           Invocation.method(
             #put,
@@ -454,14 +505,14 @@ class MockClient extends _i1.Mock implements _i3.Client {
             },
           ),
         )),
-      ) as _i7.Future<_i3.Response>);
+      ) as _i8.Future<_i3.Response>);
 
   @override
-  _i7.Future<_i3.Response> patch(
+  _i8.Future<_i3.Response> patch(
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i19.Encoding? encoding,
+    _i21.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -473,7 +524,7 @@ class MockClient extends _i1.Mock implements _i3.Client {
             #encoding: encoding,
           },
         ),
-        returnValue: _i7.Future<_i3.Response>.value(_FakeResponse_4(
+        returnValue: _i8.Future<_i3.Response>.value(_FakeResponse_5(
           this,
           Invocation.method(
             #patch,
@@ -485,14 +536,14 @@ class MockClient extends _i1.Mock implements _i3.Client {
             },
           ),
         )),
-      ) as _i7.Future<_i3.Response>);
+      ) as _i8.Future<_i3.Response>);
 
   @override
-  _i7.Future<_i3.Response> delete(
+  _i8.Future<_i3.Response> delete(
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i19.Encoding? encoding,
+    _i21.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -504,7 +555,7 @@ class MockClient extends _i1.Mock implements _i3.Client {
             #encoding: encoding,
           },
         ),
-        returnValue: _i7.Future<_i3.Response>.value(_FakeResponse_4(
+        returnValue: _i8.Future<_i3.Response>.value(_FakeResponse_5(
           this,
           Invocation.method(
             #delete,
@@ -516,10 +567,10 @@ class MockClient extends _i1.Mock implements _i3.Client {
             },
           ),
         )),
-      ) as _i7.Future<_i3.Response>);
+      ) as _i8.Future<_i3.Response>);
 
   @override
-  _i7.Future<String> read(
+  _i8.Future<String> read(
     Uri? url, {
     Map<String, String>? headers,
   }) =>
@@ -529,7 +580,7 @@ class MockClient extends _i1.Mock implements _i3.Client {
           [url],
           {#headers: headers},
         ),
-        returnValue: _i7.Future<String>.value(_i20.dummyValue<String>(
+        returnValue: _i8.Future<String>.value(_i22.dummyValue<String>(
           this,
           Invocation.method(
             #read,
@@ -537,10 +588,10 @@ class MockClient extends _i1.Mock implements _i3.Client {
             {#headers: headers},
           ),
         )),
-      ) as _i7.Future<String>);
+      ) as _i8.Future<String>);
 
   @override
-  _i7.Future<_i21.Uint8List> readBytes(
+  _i8.Future<_i23.Uint8List> readBytes(
     Uri? url, {
     Map<String, String>? headers,
   }) =>
@@ -550,25 +601,25 @@ class MockClient extends _i1.Mock implements _i3.Client {
           [url],
           {#headers: headers},
         ),
-        returnValue: _i7.Future<_i21.Uint8List>.value(_i21.Uint8List(0)),
-      ) as _i7.Future<_i21.Uint8List>);
+        returnValue: _i8.Future<_i23.Uint8List>.value(_i23.Uint8List(0)),
+      ) as _i8.Future<_i23.Uint8List>);
 
   @override
-  _i7.Future<_i3.StreamedResponse> send(_i3.BaseRequest? request) =>
+  _i8.Future<_i3.StreamedResponse> send(_i3.BaseRequest? request) =>
       (super.noSuchMethod(
         Invocation.method(
           #send,
           [request],
         ),
         returnValue:
-            _i7.Future<_i3.StreamedResponse>.value(_FakeStreamedResponse_5(
+            _i8.Future<_i3.StreamedResponse>.value(_FakeStreamedResponse_6(
           this,
           Invocation.method(
             #send,
             [request],
           ),
         )),
-      ) as _i7.Future<_i3.StreamedResponse>);
+      ) as _i8.Future<_i3.StreamedResponse>);
 
   @override
   void close() => super.noSuchMethod(
