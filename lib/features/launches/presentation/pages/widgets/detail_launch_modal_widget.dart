@@ -64,7 +64,7 @@ void showLaunchModalBottomSheet(
                     ),
                     const SizedBox(
                       width: 12,
-                    ), // เว้นช่องว่างระหว่างรูปกับข้อความ
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,6 +220,12 @@ void showLaunchModalBottomSheet(
                             width: width * 0.98,
                             height: height * 0.25,
                             color: AppColors.slateBlue,
+                            child: const Center(
+                              child: Icon(
+                                Icons.broken_image,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                 ),
                 const Divider(),
