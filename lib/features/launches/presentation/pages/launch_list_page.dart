@@ -224,16 +224,37 @@ class LaunchListScreen extends StatelessWidget {
                                                   Icons.image_not_supported,
                                                 ),
                                       ),
-                                      trailing:
-                                          launch.upcoming == true
-                                              ? const Icon(
+                                      trailing: SizedBox(
+                                        width: 60,
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            if (launch.upcoming == true) ...[
+                                              const Icon(
                                                 Icons.schedule,
                                                 color: Colors.orange,
-                                              )
-                                              : const Icon(
-                                                Icons.check_circle,
+                                              ),
+                                            ] else ...[
+                                              const Icon(
+                                                Icons.rocket_launch_rounded,
                                                 color: Colors.green,
                                               ),
+                                              const SizedBox(width: 4),
+                                              launch.success == true
+                                                  ? const Icon(
+                                                    Icons.check_outlined,
+                                                    color: Colors.green,
+                                                  )
+                                                  : const Icon(
+                                                    Icons.warning_rounded,
+                                                    color: Colors.red,
+                                                  ),
+                                            ],
+                                          ],
+                                        ),
+                                      ),
 
                                       onTap: () {
                                         if (launch.id == null) {
@@ -251,8 +272,10 @@ class LaunchListScreen extends StatelessWidget {
                             ),
                           ),
                         );
+                      } else if (state is LaunchListError) {
+                        return Center(child: Text(state.message));
                       } else {
-                        return Center(child: Text(strings.launches.error));
+                        return Text(strings.launches.error);
                       }
                     },
                   ),

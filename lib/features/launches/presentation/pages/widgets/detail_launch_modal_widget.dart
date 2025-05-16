@@ -33,17 +33,16 @@ void showLaunchModalBottomSheet(
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(2.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Container(
-                        width: width * 0.25,
-                        height: height * 0.12,
+                        width: width * 0.35,
+                        height: height * 0.17,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(16),
-                            topRight: Radius.circular(16),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(16),
                           ),
                           image:
                               launch.imageUrl != null
@@ -59,118 +58,107 @@ void showLaunchModalBottomSheet(
                         ),
                         child:
                             launch.imageUrl == null
-                                ? Center(child: Icon(Icons.rocket_launch))
+                                ? const Center(child: Icon(Icons.rocket_launch))
                                 : null,
                       ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            launch.name,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
+                    const SizedBox(
+                      width: 12,
+                    ), // เว้นช่องว่างระหว่างรูปกับข้อความ
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Text(
+                              launch.name,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              width: 70,
-                              height: 16,
-                              decoration: BoxDecoration(
-                                color: AppColors.gray,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(22),
+                          const SizedBox(height: 6),
+                          Row(
+                            children: [
+                              Container(
+                                width: 70,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                  color: AppColors.gray,
+                                  borderRadius: BorderRadius.circular(22),
                                 ),
-                              ),
-                              child: Center(
+                                alignment: Alignment.center,
                                 child: Text(
-                                  'Flight #${launch.flightNumber}',
-                                  style: TextStyle(
+                                  'Flight#${launch.flightNumber ?? 'N/A'}',
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12,
                                   ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(height: 10),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Badge(
-                                    label: Text(
-                                      'Status',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    backgroundColor: AppColors.gray,
-                                  ),
-                                  SizedBox(width: 5),
-                                  Text(
-                                    launch.upcoming
-                                        ? "🚀 Upcoming"
-                                        : (launch.success
-                                            ? strings.launches.success
-                                            : strings.launches.failed),
-                                    style: TextStyle(
-                                      color:
-                                          launch.upcoming
-                                              ? Colors.orange
-                                              : launch.success
-                                              ? Colors.green
-                                              : Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
+                              const SizedBox(width: 12),
+                              Badge(
+                                label: Text(
+                                  'Status',
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                                backgroundColor: AppColors.gray,
                               ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Row(
-                            children: [
-                              Row(
-                                children: [
-                                  Badge(
-                                    label: Text(
-                                      'Upcoming',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    backgroundColor: AppColors.gray,
-                                  ),
-                                  SizedBox(width: 5),
-                                  Container(
-                                    child:
+                              const SizedBox(width: 5),
+                              Flexible(
+                                child: Text(
+                                  launch.upcoming
+                                      ? "🚀 Upcoming"
+                                      : (launch.success
+                                          ? strings.launches.success
+                                          : strings.launches.failed),
+                                  style: TextStyle(
+                                    color:
                                         launch.upcoming
-                                            ? Icon(
-                                              Icons.access_time_outlined,
-                                              color: Colors.orange,
-                                            )
+                                            ? Colors.orange
                                             : (launch.success
-                                                ? Icon(
-                                                  Icons.rocket_launch_sharp,
-                                                  color: Colors.green,
-                                                )
-                                                : Icon(
-                                                  Icons.close,
-                                                  color: Colors.red,
-                                                )),
+                                                ? Colors.green
+                                                : Colors.red),
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                ],
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            TextButton.icon(
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              Badge(
+                                label: Text(
+                                  'Upcoming',
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                                backgroundColor: AppColors.gray,
+                              ),
+                              const SizedBox(width: 5),
+                              launch.upcoming
+                                  ? const Icon(
+                                    Icons.access_time_outlined,
+                                    color: Colors.orange,
+                                  )
+                                  : launch.success == true
+                                  ? const Icon(
+                                    Icons.rocket_launch_sharp,
+                                    color: Colors.green,
+                                  )
+                                  : const Icon(Icons.close, color: Colors.red),
+                            ],
+                          ),
+                          SizedBox(height: height * 0.02),
+                          Align(
+                            alignment: Alignment.center,
+                            child: TextButton.icon(
                               icon: const Icon(Icons.open_in_new),
                               label: const Text("Watch on YouTube"),
                               onPressed:
@@ -178,12 +166,13 @@ void showLaunchModalBottomSheet(
                                     'https://youtube.com/watch?v=${launch.youtubeId}',
                                   ),
                             ),
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
+
                 //-------------------------------- Date
                 Center(
                   child: Text(
@@ -309,46 +298,3 @@ void _launchUrl(String url) async {
     await launchUrl(uri);
   }
 }
-
-// Rocket & Launchpad
-                // Text("🚀 Rocket ID: ${launch.rocketId}"),
-                // Text("📍 Launchpad ID: ${launch.launchpadId}"),
-                // // Related IDs
-                // if (launch.crewIds.isNotEmpty)
-                //   Text("👨‍🚀 Crew: ${launch.crewIds.join(', ')}"),
-                // if (launch.capsuleIds.isNotEmpty)
-                //   Text("🛰️ Capsules: ${launch.capsuleIds.join(', ')}"),
-                // if (launch.payloadIds.isNotEmpty)
-                //   Text("📦 Payloads: ${launch.payloadIds.join(', ')}"),
-
-//                  Column(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       const Text(
-//                         "🔗 External Links",
-//                         style: TextStyle(
-//                           fontSize: 18,
-//                           fontWeight: FontWeight.bold,
-//                         ),
-//                       ),
-//                       const SizedBox(height: 8),
-//                       if (launch.webcastUrl != null)
-//                         TextButton.icon(
-//                           icon: const Icon(Icons.live_tv),
-//                           label: const Text("Watch Webcast"),
-//                           onPressed: () => _launchUrl(launch.webcastUrl!),
-//                         ),
-//                       if (launch.wikipediaUrl != null)
-//                         TextButton.icon(
-//                           icon: const Icon(Icons.book),
-//                           label: const Text("Read on Wikipedia"),
-//                           onPressed: () => _launchUrl(launch.wikipediaUrl!),
-//                         ),
-//                       if (launch.youtubeId != null)
-//                         TextButton.icon(
-//                           icon: const Icon(Icons.ondemand_video),
-//                           label: const Text("Watch on YouTube"),
-//                           onPressed: () => _launchUrl('https://youtube.com/watch?v=${launch.youtubeId}'),
-//                         ),
-//                     ],
-//                   ),

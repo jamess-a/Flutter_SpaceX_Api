@@ -23,6 +23,7 @@ class LaunchRepositoryImpl implements LaunchRepository {
         options: options,
       );
       final launches = models.map((m) => m.toEntity()).toList();
+      print(launches);
       return Right(launches);
     } catch (e) {
       return Left(ServerFailure(e.toString()));

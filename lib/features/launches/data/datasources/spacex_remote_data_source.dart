@@ -14,20 +14,17 @@ class LaunchRemoteDataSource {
     Map<String, dynamic>? query,
     Map<String, dynamic>? options,
   }) async {
-    final response = await client.post(
-      Uri.parse('https://api.spacexdata.com/v4/launches/query'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({"query": query ?? {}, "options": options ?? {}}),
+    final response = await client.get(
+      Uri.parse('https://api.spacexdata.com/v4/launches'),
     );
 
     if (response.statusCode != 200) {
       throw Exception('Failed to load launches');
     }
+    
+    final jsonData = json.decode(response.body) as List<dynamic>;
 
-    final jsonData = json.decode(response.body);
-    final List<dynamic> docs = jsonData['docs'];
-
-    return docs.map((json) => LaunchModel.fromJson(json)).toList();
+    return jsonData.map((json) => LaunchModel.fromJson(json)).toList();
   }
 
   Future<LatestLaunchModel> fetchLatestLaunch() async {
