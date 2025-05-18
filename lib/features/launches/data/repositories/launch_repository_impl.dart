@@ -82,7 +82,6 @@ class LaunchRepositoryImpl implements LaunchRepository {
       final detailLaunchPad = model.toEntity();
       return Right(detailLaunchPad);
     } catch (e) {
-      print('impl e $e');
       return Left(ServerFailure(e.toString()));
     }
   }

@@ -20,7 +20,6 @@ class CrewsListBloc extends Bloc<CrewsListEvent, CrewsListState> {
   ) async {
     emit(CrewsListLoading());
     final result = await getCrews();
-    print(result);
     result.fold(
       (failure) => emit(CrewListError("Failed to fetch crews")),
       (crews) => emit(CrewsListloaded(crews)),

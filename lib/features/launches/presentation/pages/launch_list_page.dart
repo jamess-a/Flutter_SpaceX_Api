@@ -93,7 +93,6 @@ class LaunchListScreen extends StatelessWidget {
             final launchpadId = launch.launchpadId;
             if (launchpadId.isNotEmpty) {
               final launchpadResult = await launchpaddetailUseCase.call(launchpadId);
-              print(launchpadResult);
               launchpadResult.fold((launchpadFailure) {
                 NotificationHelper.showError(
                   context,

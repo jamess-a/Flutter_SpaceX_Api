@@ -90,8 +90,7 @@ class LaunchRemoteDataSource {
     final response = await client.get(
       Uri.parse('https://api.spacexdata.com/v4/launchpads/$id'),
     );
-    print('response.statusCode ${response.statusCode}');  
-    print(response.body);
+
     if (response.statusCode != 200) {
       throw Exception('Failed to load launchpads');
     } else {

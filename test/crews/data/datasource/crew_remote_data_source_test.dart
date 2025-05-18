@@ -53,7 +53,6 @@ void main() {
       ).thenAnswer((_) async => http.Response(jsonEncode(mockJson), 200));
 
       final result = await dataSource.fetchCrews();
-      print('Result $result');
 
       expect(result, isA<List<CrewModel>>());
       expect(result.first.id, "1234");
