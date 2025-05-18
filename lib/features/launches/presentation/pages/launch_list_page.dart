@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spacex/core/theme/app_color.dart';
 import 'package:spacex/core/utils/dateformator.dart';
 import 'package:spacex/core/utils/notifications_helper.dart';
 import 'package:spacex/features/launches/domain/entities/crew_detail.dart';
+import 'package:spacex/features/launches/domain/entities/launchpad_detail.dart';
 import 'package:spacex/features/launches/domain/entities/rocket_detail.dart';
 import 'package:spacex/features/launches/domain/usecases/use_case.dart';
 import 'package:spacex/features/launches/presentation/bloc/latest_launch/latest_launch_list_bloc.dart';
@@ -26,6 +26,7 @@ class LaunchListScreen extends StatelessWidget {
   final GetLatestLaunchUseCase latestUseCase;
   final GetDetailLaunchUseCase detailUseCase;
   final GetDetailRocketUseCase rockdetailUseCase;
+  final GetDetailLaunchPadUseCase launchpaddetailUseCase;
   final GetCrewDetailUseCase crewsdetailUseCase;
   const LaunchListScreen({
     super.key,
@@ -33,6 +34,7 @@ class LaunchListScreen extends StatelessWidget {
     required this.latestUseCase,
     required this.detailUseCase,
     required this.rockdetailUseCase,
+    required this.launchpaddetailUseCase,
     required this.crewsdetailUseCase,
   });
 
@@ -66,7 +68,6 @@ class LaunchListScreen extends StatelessWidget {
 
       try {
         final launchResult = await detailUseCase.call(id);
-        print(launchResult);
 
         await launchResult.fold(
           (failure) {
@@ -88,6 +89,19 @@ class LaunchListScreen extends StatelessWidget {
               }, (r) => rocket = r);
             }
 
+            LaunchPadDetail? launchpad; 
+            final launchpadId = launch.launchpadId;
+            if (launchpadId.isNotEmpty) {
+              final launchpadResult = await launchpaddetailUseCase.call(launchpadId);
+              print(launchpadResult);
+              launchpadResult.fold((launchpadFailure) {
+                NotificationHelper.showError(
+                  context,
+                  launchpadFailure.message ?? 'Launchpad info unavailable',
+                );
+              }, (l) => launchpad = l);
+            }
+
             List<CrewDetail> crews = [];
             final crewId = launch.crewIds;
             if (crews.isEmpty || crews.every((c) => c == null)) {
@@ -106,6 +120,7 @@ class LaunchListScreen extends StatelessWidget {
               launch,
               rocket!,
               crews,
+              launchpad!,
               language,
             );
           },

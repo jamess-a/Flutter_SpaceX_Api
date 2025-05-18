@@ -24,6 +24,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetDetailLaunchUseCase(sl()));
   sl.registerLazySingleton(() => GetDetailRocketUseCase(sl()));
   sl.registerLazySingleton(() => GetCrewDetailUseCase(sl()));
+  sl.registerLazySingleton(() => GetDetailLaunchPadUseCase(sl()));
 
   // crews list 
   sl.registerLazySingleton(()=> CrewsRemoteDataSource(client));

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:spacex/features/launches/data/models/detail_crew_model.dart';
+import 'package:spacex/features/launches/data/models/detail_launchpad_model.dart';
 import 'package:spacex/features/launches/data/models/detail_rocket_model.dart';
 import 'package:spacex/features/launches/data/models/latest_launch_model.dart';
 import 'package:spacex/features/launches/data/models/launch_model.dart';
@@ -83,5 +84,19 @@ class LaunchRemoteDataSource {
     return (data['docs'] as List)
         .map((e) => DetailCrewModel.fromJson(e))
         .toList();
+  }
+
+  Future<DetailLaunchpadModel> fetchOneLaunchPad(String id) async {
+    final response = await client.get(
+      Uri.parse('https://api.spacexdata.com/v4/launchpads/$id'),
+    );
+    print('response.statusCode ${response.statusCode}');  
+    print(response.body);
+    if (response.statusCode != 200) {
+      throw Exception('Failed to load launchpads');
+    } else {
+      final jsonData = json.decode(response.body);
+      return DetailLaunchpadModel.fromJson(jsonData);
+    }
   }
 }

@@ -5,6 +5,7 @@ import 'package:spacex/features/launches/domain/entities/crew_detail.dart';
 import 'package:spacex/features/launches/domain/entities/latest_launch.dart';
 import 'package:spacex/features/launches/domain/entities/launch.dart';
 import 'package:spacex/features/launches/domain/entities/launch_detail.dart';
+import 'package:spacex/features/launches/domain/entities/launchpad_detail.dart';
 import 'package:spacex/features/launches/domain/entities/rocket_detail.dart';
 import 'package:spacex/features/launches/domain/repositories/launch_repository.dart';
 
@@ -73,4 +74,17 @@ class LaunchRepositoryImpl implements LaunchRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, LaunchPadDetail>> getDetailLaunchPad(String id) async {
+    try {
+      final model = await remoteDataSource.fetchOneLaunchPad(id);
+      final detailLaunchPad = model.toEntity();
+      return Right(detailLaunchPad);
+    } catch (e) {
+      print('impl e $e');
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
 }

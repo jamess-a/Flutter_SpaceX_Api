@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:spacex/core/theme/app_color.dart';
 import 'package:spacex/features/launches/domain/entities/crew_detail.dart';
 import 'package:spacex/features/launches/domain/entities/launch_detail.dart';
+import 'package:spacex/features/launches/domain/entities/launchpad_detail.dart';
 import 'package:spacex/features/launches/domain/entities/rocket_detail.dart';
-import 'package:spacex/features/launches/presentation/pages/widgets/crew_detail_section_widget.dart';
-import 'package:spacex/features/launches/presentation/pages/widgets/detail_rocket_section_widget.dart';
+import 'package:spacex/features/launches/presentation/pages/widgets/section/crew_detail_section_widget.dart';
+import 'package:spacex/features/launches/presentation/pages/widgets/section/launchpad_detail_section_widget.dart';
+import 'package:spacex/features/launches/presentation/pages/widgets/section/rocket_detail_section_widget.dart';
 import 'package:spacex/localization/strings_base.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -13,6 +15,7 @@ void showLaunchModalBottomSheet(
   LaunchDetail launch,
   RocketDetail rocket,
   List<CrewDetail> crews,
+  LaunchPadDetail launchpad,
   Strings strings,
 ) {
   final width = MediaQuery.of(context).size.width;
@@ -279,6 +282,8 @@ void showLaunchModalBottomSheet(
                     RocketDetailSection(rocket: rocket),
                     const Divider(),
                     CrewsDetailSection(crews: crews),
+                    const Divider(),
+                    LaunchpadDetailSection(launchpad: launchpad),
 
                     //------------------------------- Links
                     Row(

@@ -2,6 +2,7 @@ import 'package:spacex/features/launches/domain/entities/crew_detail.dart';
 import 'package:spacex/features/launches/domain/entities/latest_launch.dart';
 import 'package:spacex/features/launches/domain/entities/launch.dart';
 import 'package:spacex/features/launches/domain/entities/launch_detail.dart';
+import 'package:spacex/features/launches/domain/entities/launchpad_detail.dart';
 import 'package:spacex/features/launches/domain/entities/rocket_detail.dart';
 import 'package:spacex/features/launches/domain/repositories/launch_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -57,5 +58,15 @@ class GetCrewDetailUseCase {
 
   Future<Either<Failure, List<CrewDetail>>> call(List<String> ids) {
     return repository.getDetailCrew(ids);
+  }
+}
+
+class GetDetailLaunchPadUseCase {
+  final LaunchRepository repository;
+
+  GetDetailLaunchPadUseCase(this.repository);
+
+  Future<Either<Failure, LaunchPadDetail>> call(String id) {
+    return repository.getDetailLaunchPad(id);
   }
 }
