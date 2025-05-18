@@ -89,7 +89,8 @@ class AppRouter {
                   useCase: di.sl<GetLaunchListUseCase>(),
                   latestUseCase: di.sl<GetLatestLaunchUseCase>(),
                   detailUseCase: di.sl<GetDetailLaunchUseCase>(),
-                  rockdetailUseCase: di.sl<GetDetailRocketUseCase>()
+                  rockdetailUseCase: di.sl<GetDetailRocketUseCase>(),
+                  crewsdetailUseCase: di.sl<GetCrewDetailUseCase>(),
                 ),
           ),
           GoRoute(

@@ -152,7 +152,6 @@ class CrewScreen extends StatelessWidget {
                             ),
                           );
                         } else {
-                          print(state);
                           return Center(child: Text(strings.launches.error));
                         }
                       },

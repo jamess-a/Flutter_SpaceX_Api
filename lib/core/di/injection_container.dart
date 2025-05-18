@@ -23,6 +23,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetLatestLaunchUseCase(sl()));
   sl.registerLazySingleton(() => GetDetailLaunchUseCase(sl()));
   sl.registerLazySingleton(() => GetDetailRocketUseCase(sl()));
+  sl.registerLazySingleton(() => GetCrewDetailUseCase(sl()));
 
   // crews list 
   sl.registerLazySingleton(()=> CrewsRemoteDataSource(client));

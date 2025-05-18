@@ -22,7 +22,6 @@ class CrewRepositoryImpl implements CrewRepository {
       final crews = models.map((m) => m.toEntity()).toList();
       return Right(crews);
     } catch (e) {
-      print(e);
       return Left(ServerFailure(e.toString()));
     }
   }

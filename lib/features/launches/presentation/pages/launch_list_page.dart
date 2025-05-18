@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spacex/core/theme/app_color.dart';
 import 'package:spacex/core/utils/dateformator.dart';
 import 'package:spacex/core/utils/notifications_helper.dart';
+import 'package:spacex/features/launches/domain/entities/crew_detail.dart';
 import 'package:spacex/features/launches/domain/entities/rocket_detail.dart';
 import 'package:spacex/features/launches/domain/usecases/use_case.dart';
 import 'package:spacex/features/launches/presentation/bloc/latest_launch/latest_launch_list_bloc.dart';
@@ -25,12 +26,14 @@ class LaunchListScreen extends StatelessWidget {
   final GetLatestLaunchUseCase latestUseCase;
   final GetDetailLaunchUseCase detailUseCase;
   final GetDetailRocketUseCase rockdetailUseCase;
+  final GetCrewDetailUseCase crewsdetailUseCase;
   const LaunchListScreen({
     super.key,
     required this.useCase,
     required this.latestUseCase,
     required this.detailUseCase,
     required this.rockdetailUseCase,
+    required this.crewsdetailUseCase,
   });
 
   @override
@@ -63,6 +66,7 @@ class LaunchListScreen extends StatelessWidget {
 
       try {
         final launchResult = await detailUseCase.call(id);
+        print(launchResult);
 
         await launchResult.fold(
           (failure) {
@@ -84,10 +88,26 @@ class LaunchListScreen extends StatelessWidget {
               }, (r) => rocket = r);
             }
 
-            print(rocket);
+            List<CrewDetail> crews = [];
+            final crewId = launch.crewIds;
+            if (crews.isEmpty || crews.every((c) => c == null)) {
+              final crewResult = await crewsdetailUseCase.call(crewId);
+              crewResult.fold((crewFailure) {
+                NotificationHelper.showError(
+                  context,
+                  crewFailure.message ?? 'Crew info unavailable',
+                );
+              }, (c) => crews = c);
+            }
 
             launchBloc.add(FetchDetailLaunch(id));
-            showLaunchModalBottomSheet(context, launch, rocket!, language);
+            showLaunchModalBottomSheet(
+              context,
+              launch,
+              rocket!,
+              crews,
+              language,
+            );
           },
         );
       } catch (e) {

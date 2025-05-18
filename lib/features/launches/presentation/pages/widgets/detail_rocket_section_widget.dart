@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:spacex/features/launches/domain/entities/rocket_detail.dart';
-import 'package:spacex/core/theme/app_color.dart';
 
 class RocketDetailSection extends StatelessWidget {
   final RocketDetail? rocket;

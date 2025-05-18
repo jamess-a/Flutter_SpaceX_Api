@@ -1,3 +1,4 @@
+import 'package:spacex/features/launches/domain/entities/crew_detail.dart';
 import 'package:spacex/features/launches/domain/entities/latest_launch.dart';
 import 'package:spacex/features/launches/domain/entities/launch.dart';
 import 'package:spacex/features/launches/domain/entities/launch_detail.dart';
@@ -46,5 +47,15 @@ class GetDetailRocketUseCase {
 
   Future<Either<Failure, RocketDetail>> call(String id) {
     return repository.getDetailRocket(id);
+  }
+}
+
+class GetCrewDetailUseCase {
+  final LaunchRepository repository;
+
+  GetCrewDetailUseCase(this.repository);
+
+  Future<Either<Failure, List<CrewDetail>>> call(List<String> ids) {
+    return repository.getDetailCrew(ids);
   }
 }

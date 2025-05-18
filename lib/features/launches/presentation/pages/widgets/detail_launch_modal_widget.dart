@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:spacex/core/theme/app_color.dart';
+import 'package:spacex/features/launches/domain/entities/crew_detail.dart';
 import 'package:spacex/features/launches/domain/entities/launch_detail.dart';
 import 'package:spacex/features/launches/domain/entities/rocket_detail.dart';
+import 'package:spacex/features/launches/presentation/pages/widgets/crew_detail_section_widget.dart';
 import 'package:spacex/features/launches/presentation/pages/widgets/detail_rocket_section_widget.dart';
 import 'package:spacex/localization/strings_base.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -10,6 +12,7 @@ void showLaunchModalBottomSheet(
   BuildContext context,
   LaunchDetail launch,
   RocketDetail rocket,
+  List<CrewDetail> crews,
   Strings strings,
 ) {
   final width = MediaQuery.of(context).size.width;
@@ -62,9 +65,7 @@ void showLaunchModalBottomSheet(
                                 : null,
                       ),
                     ),
-                    const SizedBox(
-                      width: 12,
-                    ),
+                    const SizedBox(width: 12),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,7 +113,7 @@ void showLaunchModalBottomSheet(
                               Flexible(
                                 child: Text(
                                   launch.upcoming
-                                      ? "🚀 Upcoming"
+                                      ? "Upcoming"
                                       : (launch.success
                                           ? strings.launches.success
                                           : strings.launches.failed),
@@ -276,6 +277,8 @@ void showLaunchModalBottomSheet(
                         onPressed: () => _launchUrl(launch.webcastUrl!),
                       ),
                     RocketDetailSection(rocket: rocket),
+                    const Divider(),
+                    CrewsDetailSection(crews: crews),
 
                     //------------------------------- Links
                     Row(
